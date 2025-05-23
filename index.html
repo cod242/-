@@ -3,809 +3,677 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DeepSeek - Gelişmiş Arama Motoru</title>
+<title>MegaSearch</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
-
   :root {
-    --color-bg-dark: #121212;
-    --color-bg-light: #fefefe;
-    --color-primary: #4f8ef7;
-    --color-primary-dark: #3a6ed8;
-    --color-text-light: #eee;
-    --color-text-dark: #222;
-    --color-error: #f55353;
-    --color-success: #4caf50;
+    --color-bg: #0b1229;
+    --color-bg-alt: #14213d;
+    --color-text: #e5e5e5;
+    --color-accent: #fca311;
+    --color-accent-hover: #ffb84d;
+    --color-error: #e63946;
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
-
   * {
     box-sizing: border-box;
   }
   body {
     margin:0; padding:0;
-    font-family: 'Poppins', sans-serif;
-    background: var(--color-bg-dark);
-    color: var(--color-text-light);
+    font-family: var(--font-main);
+    background-color: var(--color-bg);
+    color: var(--color-text);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
     user-select: none;
   }
   header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.2rem 2rem;
-    background: #171717;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.7);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  header h1 {
-    font-weight: 600;
-    font-size: 1.8rem;
-    color: var(--color-primary);
-    letter-spacing: 1.5px;
+    margin: 1rem 0 0.5rem;
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: var(--color-accent);
     user-select: text;
   }
-  .controls-top {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-  }
-  button, .btn-link {
-    cursor: pointer;
-    border: none;
-    outline: none;
-    padding: 0.5rem 1rem;
-    border-radius: 7px;
-    background: var(--color-primary);
-    color: white;
-    font-weight: 600;
-    font-size: 0.9rem;
-    box-shadow: 0 3px 8px rgba(79,142,247,0.6);
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-    user-select: none;
-  }
-  button:hover, .btn-link:hover {
-    background: var(--color-primary-dark);
-    box-shadow: 0 5px 15px rgba(58,110,216,0.9);
-  }
-  .btn-danger {
-    background: var(--color-error);
-    box-shadow: 0 3px 8px rgba(245,83,83,0.6);
-  }
-  .btn-danger:hover {
-    background: #f44343;
-    box-shadow: 0 5px 15px rgba(244,67,67,0.9);
-  }
-  .btn-secondary {
-    background: #555;
-    box-shadow: 0 3px 8px rgba(85,85,85,0.6);
-  }
-  .btn-secondary:hover {
-    background: #444;
-    box-shadow: 0 5px 15px rgba(68,68,68,0.9);
-  }
-
-  main {
-    flex-grow: 1;
-    padding: 3rem 1rem 5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .search-box {
-    width: 100%;
+  .search-area {
+    width: 90vw;
     max-width: 650px;
-    background: #222;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-    padding: 1.6rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    position: relative;
-  }
-  .search-box:focus-within {
-    box-shadow: 0 6px 30px var(--color-primary);
+    margin-bottom: 0.75rem;
   }
   #searchInput {
-    flex-grow: 1;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1.2rem;
+    border-radius: 40px;
     border: none;
     outline: none;
-    font-size: 1.4rem;
-    background: transparent;
-    color: var(--color-text-light);
-    font-weight: 600;
-    letter-spacing: 0.03em;
+    background-color: var(--color-bg-alt);
+    color: var(--color-text);
+    box-shadow: 0 0 10px #1118;
   }
-
-  #autocomplete {
-    position: absolute;
-    top: 105%;
-    left: 0;
-    right: 0;
-    background: #1b1b1b;
-    border-radius: 0 0 12px 12px;
-    max-height: 180px;
-    overflow-y: auto;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.9);
-    z-index: 200;
+  #searchInput::placeholder {
+    color: #aaa;
   }
-  .autocomplete-item {
-    padding: 0.8rem 1.2rem;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .autocomplete-item:hover {
-    background: var(--color-primary);
-  }
-
   .buttons-row {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    width: 100%;
-    max-width: 650px;
-  }
-
-  /* Kategoriler */
-  .tabs {
-    margin: 2rem 0 1.5rem;
-    display: flex;
-    gap: 20px;
     justify-content: center;
-    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  button, .icon-btn {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    font-weight: 700;
+    border: none;
+    border-radius: 30px;
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  button:hover, .icon-btn:hover {
+    background-color: var(--color-accent-hover);
+  }
+  #voiceSearchBtn {
+    font-size: 1.3rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 50%;
+    width: 40px; height: 40px;
+    justify-content: center;
+  }
+  #voiceSearchBtn:disabled {
+    background: #555 !important;
+    cursor: not-allowed;
+  }
+  .tabs {
+    margin: 1rem 0 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
   }
   .tab {
-    background: #2b2b2b;
-    padding: 0.6rem 1.8rem;
-    border-radius: 30px;
-    font-weight: 600;
-    color: #ccc;
+    padding: 0.25rem 1rem;
     cursor: pointer;
+    border-radius: 25px;
+    background-color: var(--color-bg-alt);
+    color: var(--color-text);
+    font-weight: 700;
     user-select: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    transition: all 0.3s ease;
+    transition: background-color 0.25s ease;
+    border: 2px solid transparent;
   }
   .tab:hover {
-    background: var(--color-primary);
-    color: white;
-    box-shadow: 0 6px 18px rgba(79,142,247,0.8);
+    background-color: var(--color-accent);
+    color: var(--color-bg);
   }
   .tab.active {
-    background: var(--color-primary);
-    color: white;
-    box-shadow: 0 8px 28px rgba(79,142,247,1);
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    border-color: var(--color-bg);
   }
-
-  /* Kısayol listesi */
-  .shortcut-list {
-    width: 100%;
+  #shortcutsContainer {
     max-width: 650px;
-    margin-top: 2rem;
-    background: #222;
+    width: 90vw;
+    margin-bottom: 1.5rem;
+    background-color: var(--color-bg-alt);
+    padding: 1rem 1.25rem;
     border-radius: 12px;
-    padding: 1rem 1.5rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-    user-select: none;
-  }
-  .shortcut-list h2 {
-    margin: 0 0 1rem 0;
-    font-weight: 700;
-    color: var(--color-primary);
-    text-align: center;
+    box-shadow: 0 0 14px #111c inset;
   }
   .shortcut-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #2f2f2f;
-    padding: 0.8rem 1rem;
-    border-radius: 10px;
-    margin-bottom: 0.8rem;
-    transition: background 0.3s ease;
+    background: #141c40;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: var(--color-text);
   }
-  .shortcut-item:hover {
-    background: var(--color-primary);
-    color: white;
+  .shortcut-item:last-child {
+    margin-bottom: 0;
   }
   .shortcut-info {
-    max-width: 80%;
-  }
-  .shortcut-info strong {
-    display: block;
-    font-size: 1.1rem;
-    margin-bottom: 0.2rem;
-  }
-  .shortcut-info a {
-    font-size: 0.85rem;
-    color: #9ecfff;
-    text-decoration: underline;
-    word-break: break-all;
+    flex: 1 1 auto;
+    user-select: text;
+    overflow-wrap: break-word;
   }
   .shortcut-actions {
     display: flex;
-    gap: 12px;
+    gap: 0.5rem;
   }
   .shortcut-actions button {
     background: transparent;
-    color: #ccc;
     border: none;
-    font-size: 1.2rem;
+    color: var(--color-accent);
     cursor: pointer;
-    transition: color 0.25s;
+    font-size: 1.1rem;
   }
   .shortcut-actions button:hover {
-    color: var(--color-error);
+    color: var(--color-accent-hover);
   }
-
-  /* Popup modal */
+  #addShortcutBtn {
+    margin-bottom: 1rem;
+  }
+  /* Popup modal for add/edit shortcut */
   #popupOverlay {
     position: fixed;
     top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.85);
+    background: rgba(11,18,41,0.8);
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 300;
+    z-index: 1000;
   }
-  #popup {
-    background: #222;
-    padding: 2rem 3rem;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.9);
-    width: 90%;
-    max-width: 460px;
-    color: var(--color-text-light);
-  }
-  #popup h3 {
-    margin-top: 0;
-    font-weight: 600;
-    margin-bottom: 1.2rem;
-    text-align: center;
-    color: var(--color-primary);
-  }
-  #popup label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-  }
-  #popup input {
-    width: 100%;
-    padding: 0.7rem 1rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: none;
-    margin-bottom: 1.4rem;
-  }
-  #popup input:focus {
-    outline: 2px solid var(--color-primary);
-  }
-  #popup .popup-buttons {
-    text-align: center;
-  }
-  #popup .popup-buttons button {
-    margin: 0 10px;
-    min-width: 100px;
-  }
-
-  /* Sesli arama butonu */
-  .btn-mic {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--color-primary);
-    font-size: 1.8rem;
-    user-select: none;
-    transition: color 0.3s ease;
-  }
-  .btn-mic:hover {
-    color: var(--color-primary-dark);
-  }
-
-  /* Tema toggle */
-  #themeToggle {
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    font-size: 1.6rem;
-    color: var(--color-primary);
-    user-select: none;
-  }
-  #themeToggle:hover {
-    color: var(--color-primary-dark);
-  }
-
-  /* Gizlilik modu switch */
-  .privacy-switch {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.9rem;
-    user-select: none;
-  }
-  .privacy-switch input[type="checkbox"] {
-    width: 45px;
-    height: 24px;
-    -webkit-appearance: none;
-    background: #444;
+  #popupContent {
+    background: var(--color-bg-alt);
+    padding: 1.5rem 2rem;
     border-radius: 12px;
-    position: relative;
+    width: 90vw;
+    max-width: 400px;
+    box-shadow: 0 0 20px #000a;
+    color: var(--color-text);
+  }
+  #popupContent h3 {
+    margin-top: 0; margin-bottom: 1rem;
+    text-align: center;
+  }
+  #popupContent label {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-weight: 700;
+  }
+  #popupContent input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    border: none;
     outline: none;
-    cursor: pointer;
-    transition: background 0.3s;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    background-color: #1c2541;
+    color: var(--color-text);
   }
-  .privacy-switch input[type="checkbox"]:checked {
-    background: var(--color-primary);
+  #popupContent input::placeholder {
+    color: #999;
   }
-  .privacy-switch input[type="checkbox"]::before {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    top: 2px;
-    left: 3px;
-    background: white;
-    transition: left 0.3s;
+  #popupBtns {
+    text-align: center;
   }
-  .privacy-switch input[type="checkbox"]:checked::before {
-    left: 22px;
+  #popupBtns button {
+    margin: 0 0.5rem;
+    width: 100px;
   }
-
-  /* Bildirim alanı */
+  /* Notification */
   #notification {
     position: fixed;
-    top: 10px;
-    right: 15px;
-    background: var(--color-primary);
-    color: white;
-    padding: 1rem 1.5rem;
-    border-radius: 15px;
-    box-shadow: 0 6px 15px rgba(79,142,247,0.9);
-    user-select: none;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-accent);
+    color: var(--color-bg);
+    padding: 0.75rem 1.5rem;
+    border-radius: 24px;
+    box-shadow: 0 0 10px #ffa500cc;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
-    font-weight: 600;
-    z-index: 999;
+    user-select: none;
+    font-weight: 700;
   }
   #notification.show {
     opacity: 1;
     pointer-events: auto;
   }
-
-  /* Robot doğrulama basit */
-  #robotCheck {
-    position: fixed;
-    top: 65px;
-    right: 15px;
-    background: #333;
-    padding: 0.7rem 1rem;
-    border-radius: 14px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-    font-size: 0.85rem;
-    user-select: none;
+  /* History */
+  #historyContainer {
+    max-width: 650px;
+    width: 90vw;
+    background-color: var(--color-bg-alt);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 0 14px #111c inset;
+    margin-bottom: 1.5rem;
+    max-height: 240px;
+    overflow-y: auto;
+    user-select: text;
+  }
+  .history-item {
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px solid #222d59;
+    cursor: pointer;
+  }
+  .history-item:last-child {
+    border-bottom: none;
+  }
+  .history-item:hover {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+  }
+  /* Privacy toggle */
+  .privacy-container {
     display: flex;
     align-items: center;
-    gap: 10px;
-    color: var(--color-primary);
-    z-index: 9999;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+    justify-content: center;
+    color: var(--color-text);
+    user-select: none;
   }
-  #robotCheck span.status {
+  .privacy-container input[type="checkbox"] {
+    width: 18px; height: 18px;
+    cursor: pointer;
+  }
+  /* Robot Verification */
+  #robotStatus {
+    text-align: center;
+    margin-bottom: 0.75rem;
     font-weight: 700;
-    color: var(--color-success);
-  }
-  #robotCheck span.status.fail {
     color: var(--color-error);
+    user-select: none;
   }
-
-  /* Responsive */
-  @media (max-width: 600px) {
-    main {
-      padding: 2rem 1rem 4rem;
-    }
-    .search-box {
-      max-width: 100%;
-      padding: 1.2rem 1.4rem;
-    }
-    .buttons-row {
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
+  #robotStatus.verified {
+    color: #38b000;
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>DeepSeek</h1>
-  <div class="controls-top">
-    <button id="addShortcutBtn" title="Kısayol Ekle">+</button>
-    <button id="themeToggle" title="Tema Değiştir">🌙</button>
-    <label class="privacy-switch" title="Arama Geçmişini Gizle">
-      <input type="checkbox" id="privacyToggle" />
-      Gizlilik Modu
-    </label>
-  </div>
-</header>
+<header>MegaSearch</header>
 
-<main>
-  <div class="search-box" role="search" aria-label="Arama Motoru">
-    <input type="text" id="searchInput" placeholder="Arama yap veya URL yaz..." autocomplete="off" aria-autocomplete="list" aria-controls="autocomplete" aria-haspopup="listbox" aria-expanded="false" />
-    <button class="btn-mic" id="voiceSearchBtn" title="Sesle Arama" aria-label="Sesle Arama">🎤</button>
-  </div>
-  <div id="autocomplete" role="listbox" aria-label="Arama Önerileri"></div>
+<section class="search-area" role="search" aria-label="MegaSearch Arama Alanı">
+  <input type="search" id="searchInput" placeholder="Aramak için yazın..." aria-autocomplete="list" aria-controls="autocompleteList" aria-expanded="false" aria-haspopup="listbox" autocomplete="off" />
+  <button id="voiceSearchBtn" aria-label="Sesli Arama Başlat" title="Sesli Arama Başlat">🎤</button>
+</section>
 
-  <div class="tabs" role="tablist" aria-label="Arama Kategorileri">
-    <div class="tab active" data-category="web" role="tab" aria-selected="true" tabindex="0">Web</div>
-    <div class="tab" data-category="images" role="tab" tabindex="-1">Görseller</div>
-    <div class="tab" data-category="news" role="tab" tabindex="-1">Haberler</div>
-    <div class="tab" data-category="video" role="tab" tabindex="-1">Videolar</div>
-  </div>
+<div class="tabs" role="tablist" aria-label="Arama Kategorileri">
+  <div class="tab active" data-category="web" role="tab" tabindex="0" aria-selected="true">Web</div>
+  <div class="tab" data-category="images" role="tab" tabindex="-1" aria-selected="false">Görseller</div>
+  <div class="tab" data-category="news" role="tab" tabindex="-1" aria-selected="false">Haberler</div>
+  <div class="tab" data-category="videos" role="tab" tabindex="-1" aria-selected="false">Videolar</div>
+</div>
 
-  <div class="buttons-row">
-    <button id="searchBtn">Ara</button>
-  </div>
+<div class="buttons-row">
+  <button id="addShortcutBtn" aria-haspopup="dialog" aria-controls="popupOverlay" title="Kısayol Ekle">+ Kısayol Ekle</button>
+  <button id="clearHistoryBtn" title="Arama Geçmişini Temizle">Geçmişi Temizle</button>
+</div>
 
-  <section class="shortcut-list" aria-label="Kısayollar ve Yönetim">
-    <h2>Kısayolların</h2>
-    <div id="shortcutsContainer" role="list"></div>
-  </section>
-</main>
+<div id="robotStatus" aria-live="polite">Robot doğrulaması bekleniyor...</div>
+<button id="robotVerifyBtn" disabled>Ben robot değilim</button>
+
+<section id="shortcutsContainer" aria-label="Kısayollar Listesi" tabindex="0"></section>
+<section id="historyContainer" aria-label="Arama Geçmişi" tabindex="0"></section>
 
 <!-- Kısayol Ekle/Düzenle Popup -->
 <div id="popupOverlay" role="dialog" aria-modal="true" aria-labelledby="popupTitle" tabindex="-1">
-  <div id="popup">
+  <div id="popupContent">
     <h3 id="popupTitle">Kısayol Ekle</h3>
-    <label for="shortcutName">Site Adı</label>
-    <input type="text" id="shortcutName" placeholder="Örn: YouTube" />
-    <label for="shortcutURL">Site URL (https:// ile başlamalı)</label>
-    <input type="url" id="shortcutURL" placeholder="https://youtube.com" />
-    <div class="popup-buttons">
-      <button id="saveShortcutBtn">Kaydet</button>
-      <button id="cancelShortcutBtn" class="btn-secondary">İptal</button>
-    </div>
+    <form id="shortcutForm">
+      <label for="shortcutName">İsim</label>
+      <input type="text" id="shortcutName" name="shortcutName" placeholder="Örn: YouTube" required maxlength="25" autocomplete="off" />
+      <label for="shortcutURL">URL (https:// ile başlayın)</label>
+      <input type="url" id="shortcutURL" name="shortcutURL" placeholder="https://youtube.com" required autocomplete="off" />
+      <div id="popupBtns">
+        <button type="submit" id="popupSaveBtn">Kaydet</button>
+        <button type="button" id="popupCancelBtn">İptal</button>
+      </div>
+    </form>
   </div>
 </div>
 
-<!-- Bildirim alanı -->
 <div id="notification" role="alert" aria-live="assertive"></div>
 
-<!-- Basit Robot Kontrol -->
-<div id="robotCheck" aria-live="polite" aria-atomic="true">
-  <span>Robot kontrolü: </span><span class="status fail" id="robotStatus">Henüz doğrulanmadı</span>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script>
-  // Tema, gizlilik, kısayollar, arama motoru fonksiyonları
-  const searchEngines = {
-    web: 'https://www.google.com/search?q=',
-    images: 'https://www.google.com/search?tbm=isch&q=',
-    news: 'https://news.google.com/search?q=',
-    video: 'https://www.youtube.com/results?search_query='
+(() => {
+  "use strict";
+
+  // ======= Ayarlar =======
+  const SEARCH_BASE_URL = "https://megasearch.example.com/search?q="; // Kendi motorunuza göre değiştirin
+  const SEARCH_BASE_URLS = {
+    web: SEARCH_BASE_URL,
+    images: SEARCH_BASE_URL + "&type=images",
+    news: SEARCH_BASE_URL + "&type=news",
+    videos: SEARCH_BASE_URL + "&type=videos"
   };
 
+  // ======= Elemanlar =======
+  const searchInput = document.getElementById("searchInput");
+  const voiceSearchBtn = document.getElementById("voiceSearchBtn");
+  const tabs = document.querySelectorAll(".tab");
+  const shortcutsContainer = document.getElementById("shortcutsContainer");
+  const addShortcutBtn = document.getElementById("addShortcutBtn");
+  const popupOverlay = document.getElementById("popupOverlay");
+  const shortcutForm = document.getElementById("shortcutForm");
+  const shortcutNameInput = document.getElementById("shortcutName");
+  const shortcutURLInput = document.getElementById("shortcutURL");
+  const popupCancelBtn = document.getElementById("popupCancelBtn");
+  const notification = document.getElementById("notification");
+  const historyContainer = document.getElementById("historyContainer");
+  const clearHistoryBtn = document.getElementById("clearHistoryBtn");
+  const robotStatus = document.getElementById("robotStatus");
+  const robotVerifyBtn = document.getElementById("robotVerifyBtn");
+
+  // ======= Değişkenler =======
   let shortcuts = [];
-  let editingShortcutIndex = null;
-  let privacyMode = false;
+  let history = [];
+  let selectedCategory = "web";
+  let isRobotVerified = false;
+  let editingShortcutIndex = -1;
 
-  // Robot doğrulama kontrol değişkenleri
-  let mouseMoved = false;
-  let robotVerified = false;
+  // ======= Basit AES şifreleme/şifre çözme =======
+  // (Not: Basit örnek, gerçek için sunucu tarafı daha güvenli olmalı)
+  function encrypt(text, key) {
+    let result = "";
+    for(let i=0; i<text.length; i++) {
+      result += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+    }
+    return btoa(result);
+  }
+  function decrypt(base64, key) {
+    let text = atob(base64);
+    let result = "";
+    for(let i=0; i<text.length; i++) {
+      result += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+    }
+    return result;
+  }
+  const ENCRYPT_KEY = "MegaSearchSecretKey123!";
 
-  // Bildirim göster
-  function showNotification(text, type='success') {
-    const notif = document.getElementById('notification');
-    notif.textContent = text;
-    notif.style.backgroundColor = (type==='success') ? '#4caf50' : '#f44336';
-    notif.classList.add('show');
-    setTimeout(() => notif.classList.remove('show'), 3000);
+  // ======= Bildirim =======
+  function showNotification(msg) {
+    notification.textContent = msg;
+    notification.classList.add("show");
+    setTimeout(() => notification.classList.remove("show"), 3500);
   }
 
-  // Tema değiştir
-  const themeToggle = document.getElementById('themeToggle');
-  let darkMode = true;
-  function updateTheme() {
-    if (darkMode) {
-      document.body.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--color-bg-dark');
-      document.body.style.color = getComputedStyle(document.documentElement).getPropertyValue('--color-text-light');
-      themeToggle.textContent = '☀️';
-    } else {
-      document.body.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--color-bg-light');
-      document.body.style.color = getComputedStyle(document.documentElement).getPropertyValue('--color-text-dark');
-      themeToggle.textContent = '🌙';
-    }
-  }
-  themeToggle.addEventListener('click', () => {
-    darkMode = !darkMode;
-    updateTheme();
-  });
-  updateTheme();
-
-  // Gizlilik modu toggle
-  const privacyToggle = document.getElementById('privacyToggle');
-  privacyToggle.addEventListener('change', () => {
-    privacyMode = privacyToggle.checked;
-    if (privacyMode) {
-      showNotification('Gizlilik modu açık: Arama geçmişi kaydedilmeyecek');
-    } else {
-      showNotification('Gizlilik modu kapalı: Arama geçmişi kaydedilecek');
-    }
-  });
-
-  // Kısayolları yükle ve kaydet
-  function saveShortcuts() {
-    if (!privacyMode) {
-      try {
-        // AES şifreleme anahtarı (basit örnek)
-        const key = CryptoJS.enc.Utf8.parse('deepseek-secretkey');
-        const iv = CryptoJS.enc.Utf8.parse('deepseek-secretiv__');
-        const data = JSON.stringify(shortcuts);
-        const encrypted = CryptoJS.AES.encrypt(data, key, { iv: iv }).toString();
-        localStorage.setItem('deepseek-shortcuts', encrypted);
-      } catch(e) {
-        console.error('Kısayol kaydetme hatası:', e);
-      }
-    }
-  }
+  // ======= Kısayollar Yükle/Göster =======
   function loadShortcuts() {
-    if (!privacyMode) {
-      try {
-        const key = CryptoJS.enc.Utf8.parse('deepseek-secretkey');
-        const iv = CryptoJS.enc.Utf8.parse('deepseek-secretiv__');
-        const encrypted = localStorage.getItem('deepseek-shortcuts');
-        if (encrypted) {
-          const decrypted = CryptoJS.AES.decrypt(encrypted, key, { iv: iv }).toString(CryptoJS.enc.Utf8);
-          shortcuts = JSON.parse(decrypted);
-        }
-      } catch(e) {
-        console.warn('Kısayol yükleme hatası:', e);
-        shortcuts = [];
+    try {
+      let raw = localStorage.getItem("megaShortcuts");
+      if(raw) {
+        shortcuts = JSON.parse(raw);
+      } else {
+        // Örnek varsayılan kısayollar
+        shortcuts = [
+          {name:"YouTube", url:"https://youtube.com"},
+          {name:"Twitter", url:"https://twitter.com"},
+          {name:"GitHub", url:"https://github.com"},
+          {name:"News", url:"https://news.ycombinator.com"},
+          {name:"Images", url:"https://images.google.com"}
+        ];
+        saveShortcuts();
       }
+    } catch(e) {
+      shortcuts = [];
     }
   }
-
+  function saveShortcuts() {
+    localStorage.setItem("megaShortcuts", JSON.stringify(shortcuts));
+  }
   function renderShortcuts() {
-    const container = document.getElementById('shortcutsContainer');
-    container.innerHTML = '';
-    if (shortcuts.length === 0) {
-      container.innerHTML = '<p style="text-align:center;color:#999;">Henüz kısayol eklenmedi.</p>';
+    if(shortcuts.length === 0) {
+      shortcutsContainer.innerHTML = "<p style='text-align:center;color:#777;'>Kısayol bulunamadı. + ile ekleyin.</p>";
       return;
     }
-    shortcuts.forEach((sc, idx) => {
-      const div = document.createElement('div');
-      div.className = 'shortcut-item';
-      div.innerHTML = `
-        <div class="shortcut-info">
-          <strong>${sc.name}</strong>
-          <a href="${sc.url}" target="_blank" rel="noopener noreferrer">${sc.url}</a>
-        </div>
+    shortcutsContainer.innerHTML = "";
+    shortcuts.forEach((sc,i) => {
+      const div = document.createElement("div");
+      div.className = "shortcut-item";
+      div.tabIndex = 0;
+      div.title = `Git: ${sc.name}`;
+      div.innerHTML = `<div class="shortcut-info">${sc.name}</div>
         <div class="shortcut-actions">
-          <button title="Düzenle" aria-label="Düzenle" onclick="editShortcut(${idx})">✏️</button>
-          <button title="Sil" aria-label="Sil" onclick="deleteShortcut(${idx})">🗑️</button>
-        </div>
-      `;
-      container.appendChild(div);
+          <button aria-label="Düzenle" data-index="${i}" class="edit-btn">✏️</button>
+          <button aria-label="Sil" data-index="${i}" class="delete-btn">🗑️</button>
+        </div>`;
+      shortcutsContainer.appendChild(div);
+    });
+    // Kısayola tıklayınca o URL’yi yeni sekmede aç
+    shortcutsContainer.querySelectorAll(".shortcut-item").forEach(item => {
+      item.addEventListener("click", e => {
+        if(e.target.tagName === "BUTTON") return; // Butona tıklanıyorsa engelle
+        const index = [...shortcutsContainer.children].indexOf(item);
+        if(index >= 0 && shortcuts[index]) {
+          window.open(shortcuts[index].url, "_blank", "noopener");
+        }
+      });
+    });
+    // Düzenle butonları
+    shortcutsContainer.querySelectorAll(".edit-btn").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.stopPropagation();
+        editingShortcutIndex = +btn.dataset.index;
+        const sc = shortcuts[editingShortcutIndex];
+        shortcutNameInput.value = sc.name;
+        shortcutURLInput.value = sc.url;
+        popupOverlay.style.display = "flex";
+        shortcutNameInput.focus();
+        document.getElementById("popupTitle").textContent = "Kısayol Düzenle";
+      });
+    });
+    // Sil butonları
+    shortcutsContainer.querySelectorAll(".delete-btn").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.stopPropagation();
+        const idx = +btn.dataset.index;
+        if(confirm(`"${shortcuts[idx].name}" kısayolunu silmek istediğinize emin misiniz?`)) {
+          shortcuts.splice(idx, 1);
+          saveShortcuts();
+          renderShortcuts();
+          showNotification("Kısayol silindi.");
+        }
+      });
     });
   }
 
-  // Popup kontrolleri
-  const popupOverlay = document.getElementById('popupOverlay');
-  const shortcutNameInput = document.getElementById('shortcutName');
-  const shortcutURLInput = document.getElementById('shortcutURL');
-  const saveShortcutBtn = document.getElementById('saveShortcutBtn');
-  const cancelShortcutBtn = document.getElementById('cancelShortcutBtn');
-
-  document.getElementById('addShortcutBtn').addEventListener('click', () => {
-    editingShortcutIndex = null;
-    shortcutNameInput.value = '';
-    shortcutURLInput.value = '';
-    popupOverlay.style.display = 'flex';
-    shortcutNameInput.focus();
-  });
-  cancelShortcutBtn.addEventListener('click', () => {
-    popupOverlay.style.display = 'none';
-  });
-  saveShortcutBtn.addEventListener('click', () => {
-    const name = shortcutNameInput.value.trim();
-    const url = shortcutURLInput.value.trim();
-    if (!name || !url || !/^https?:\/\/.+/.test(url)) {
-      alert('Lütfen geçerli bir isim ve URL girin (https:// ile başlamalı)');
+  // ======= Arama Geçmişi =======
+  function loadHistory() {
+    try {
+      let raw = localStorage.getItem("megaHistory");
+      if(raw) {
+        // Şifre çöz
+        let dec = decrypt(raw, ENCRYPT_KEY);
+        history = JSON.parse(dec);
+      } else {
+        history = [];
+      }
+    } catch {
+      history = [];
+    }
+  }
+  function saveHistory() {
+    let enc = encrypt(JSON.stringify(history), ENCRYPT_KEY);
+    localStorage.setItem("megaHistory", enc);
+  }
+  function renderHistory() {
+    if(history.length === 0) {
+      historyContainer.innerHTML = "<p style='text-align:center;color:#777;'>Geçmiş boş.</p>";
       return;
     }
-    if (editingShortcutIndex === null) {
-      shortcuts.push({name, url});
-      showNotification('Kısayol eklendi');
-    } else {
-      shortcuts[editingShortcutIndex] = {name, url};
-      showNotification('Kısayol güncellendi');
+    historyContainer.innerHTML = "";
+    history.slice().reverse().forEach(item => {
+      const div = document.createElement("div");
+      div.className = "history-item";
+      div.tabIndex = 0;
+      div.textContent = item.term + " [" + item.category + "]";
+      div.title = "Aramayı tekrarla";
+      div.addEventListener("click", () => {
+        searchInput.value = item.term;
+        selectedCategory = item.category;
+        updateCategoryUI();
+        doSearch();
+      });
+      historyContainer.appendChild(div);
+    });
+  }
+  function addHistory(term, category) {
+    if(!term.trim()) return;
+    // Aynı terim + kategori varsa sil (tekrar yok)
+    history = history.filter(h => !(h.term === term && h.category === category));
+    history.push({term, category});
+    if(history.length > 100) history.shift();
+    saveHistory();
+    renderHistory();
+  }
+  clearHistoryBtn.addEventListener("click", () => {
+    if(confirm("Arama geçmişini tamamen silmek istediğinize emin misiniz?")) {
+      history = [];
+      saveHistory();
+      renderHistory();
+      showNotification("Geçmiş temizlendi.");
     }
-    popupOverlay.style.display = 'none';
-    saveShortcuts();
-    renderShortcuts();
   });
 
-  function editShortcut(idx) {
-    editingShortcutIndex = idx;
-    shortcutNameInput.value = shortcuts[idx].name;
-    shortcutURLInput.value = shortcuts[idx].url;
-    popupOverlay.style.display = 'flex';
-    shortcutNameInput.focus();
-  }
-  function deleteShortcut(idx) {
-    if (confirm(`"${shortcuts[idx].name}" kısayolunu silmek istediğine emin misin?`)) {
-      shortcuts.splice(idx,1);
-      saveShortcuts();
-      renderShortcuts();
-      showNotification('Kısayol silindi', 'error');
-    }
-  }
-
-  // Arama işlemi
-  const searchInput = document.getElementById('searchInput');
-  const searchBtn = document.getElementById('searchBtn');
-  const tabs = document.querySelectorAll('.tab');
-  let selectedCategory = 'web';
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-        t.setAttribute('tabindex', '-1');
-      });
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
-      tab.setAttribute('tabindex', '0');
-      selectedCategory = tab.dataset.category;
+  // ======= Kategori seçimi =======
+  function updateCategoryUI() {
+    tabs.forEach(tab => {
+      if(tab.dataset.category === selectedCategory) {
+        tab.classList.add("active");
+        tab.setAttribute("aria-selected", "true");
+        tab.tabIndex = 0;
+      } else {
+        tab.classList.remove("active");
+        tab.setAttribute("aria-selected", "false");
+        tab.tabIndex = -1;
+      }
     });
-    tab.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+  }
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      selectedCategory = tab.dataset.category;
+      updateCategoryUI();
+      searchInput.focus();
+    });
+    tab.addEventListener("keydown", e => {
+      if(e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         tab.click();
       }
     });
   });
 
-  function performSearch() {
-    if (!robotVerified) {
-      alert('Lütfen robot doğrulamasını tamamlayınız.');
+  // ======= Arama işlemi =======
+  function doSearch() {
+    if(!isRobotVerified) {
+      showNotification("Lütfen önce robot doğrulamasını yapın.");
       return;
     }
-    let query = searchInput.value.trim();
-    if (!query) return;
-    if (/^https?:\/\//i.test(query)) {
-      // Doğrudan URL aç
-      window.open(query, '_blank');
-    } else {
-      // Arama motoruna yönlendir
-      window.open(searchEngines[selectedCategory] + encodeURIComponent(query), '_blank');
-      if (!privacyMode) addToHistory(query, selectedCategory);
-    }
+    const query = searchInput.value.trim();
+    if(!query) return;
+    addHistory(query, selectedCategory);
+    // MegaSearch URL oluştur
+    let base = SEARCH_BASE_URLS[selectedCategory] || SEARCH_BASE_URLS.web;
+    // Basit URL encode
+    let url = base + encodeURIComponent(query);
+    window.location.href = url;
   }
-  searchBtn.addEventListener('click', performSearch);
-  searchInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') performSearch();
+  searchInput.addEventListener("keydown", e => {
+    if(e.key === "Enter") {
+      e.preventDefault();
+      doSearch();
+    }
   });
 
-  // Arama geçmişi (localStorage)
-  function addToHistory(query, category) {
-    let hist = JSON.parse(localStorage.getItem('deepseek-history') || '[]');
-    hist.unshift({query, category, timestamp: Date.now()});
-    if (hist.length > 50) hist.pop();
-    localStorage.setItem('deepseek-history', JSON.stringify(hist));
-  }
+  // ======= Kısayol popup =======
+  addShortcutBtn.addEventListener("click", () => {
+    editingShortcutIndex = -1;
+    shortcutForm.reset();
+    document.getElementById("popupTitle").textContent = "Kısayol Ekle";
+    popupOverlay.style.display = "flex";
+    shortcutNameInput.focus();
+  });
+  popupCancelBtn.addEventListener("click", () => {
+    popupOverlay.style.display = "none";
+  });
+  shortcutForm.addEventListener("submit", e => {
+    e.preventDefault();
+    let name = shortcutNameInput.value.trim();
+    let url = shortcutURLInput.value.trim();
+    if(!name || !url) return;
+    if(!/^https?:\/\//i.test(url)) {
+      alert("URL mutlaka https:// veya http:// ile başlamalıdır.");
+      shortcutURLInput.focus();
+      return;
+    }
+    if(editingShortcutIndex >= 0) {
+      shortcuts[editingShortcutIndex] = {name, url};
+    } else {
+      shortcuts.push({name, url});
+    }
+    saveShortcuts();
+    renderShortcuts();
+    popupOverlay.style.display = "none";
+    showNotification(`Kısayol ${editingShortcutIndex >= 0 ? "güncellendi" : "eklendi"}.`);
+  });
 
-  // Sesli arama
-  const voiceSearchBtn = document.getElementById('voiceSearchBtn');
-  let recognition = null;
-  if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+  // ======= Sesli arama =======
+  let recognition;
+  if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SpeechRecognition();
     recognition.lang = 'tr-TR';
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
-    recognition.continuous = false;
 
-    recognition.onresult = (event) => {
-      const speech = event.results[0][0].transcript;
-      searchInput.value = speech;
-      performSearch();
+    recognition.onresult = e => {
+      let speechResult = e.results[0][0].transcript;
+      searchInput.value = speechResult;
+      recognition.stop();
+      doSearch();
     };
-    recognition.onerror = (event) => {
-      showNotification('Sesli arama sırasında hata oluştu', 'error');
+    recognition.onerror = e => {
+      showNotification("Sesli arama hatası: " + e.error);
+      recognition.stop();
+      voiceSearchBtn.disabled = false;
+    };
+    recognition.onend = () => {
+      voiceSearchBtn.disabled = false;
     };
   } else {
-    voiceSearchBtn.style.display = 'none';
+    voiceSearchBtn.disabled = true;
+    voiceSearchBtn.title = "Tarayıcınız sesli aramayı desteklemiyor.";
   }
-  voiceSearchBtn.addEventListener('click', () => {
-    if (!recognition) return;
-    recognition.start();
+  voiceSearchBtn.addEventListener("click", () => {
+    if(isRobotVerified) {
+      voiceSearchBtn.disabled = true;
+      recognition.start();
+    } else {
+      showNotification("Önce robot doğrulamasını yapmalısınız.");
+    }
   });
 
-  // Basit otomatik tamamlama (kısayollardan ve geçmişten)
-  const autocomplete = document.getElementById('autocomplete');
-  searchInput.addEventListener('input', () => {
-    let val = searchInput.value.trim().toLowerCase();
-    if (!val) {
-      autocomplete.innerHTML = '';
-      autocomplete.style.display = 'none';
-      searchInput.setAttribute('aria-expanded', 'false');
-      return;
-    }
-    let matches = [];
+  // ======= Robot doğrulama =======
+  // Fare hareketi ile aktifleşir
+  function enableRobotVerify() {
+    robotVerifyBtn.disabled = false;
+    robotStatus.textContent = "Robot doğrulaması için butona basın.";
+    window.removeEventListener("mousemove", onMouseMoveOnce);
+  }
+  function onMouseMoveOnce() {
+    enableRobotVerify();
+  }
+  window.addEventListener("mousemove", onMouseMoveOnce);
 
-    // Kısayolları arama
-    for(let sc of shortcuts) {
-      if (sc.name.toLowerCase().includes(val) || sc.url.toLowerCase().includes(val)) {
-        matches.push(sc.name + ' (' + sc.url + ')');
-      }
-    }
-
-    // Geçmişten arama (yalnız gizlilik kapalıysa)
-    if (!privacyMode) {
-      const hist = JSON.parse(localStorage.getItem('deepseek-history') || '[]');
-      for(let h of hist) {
-        if (h.query.toLowerCase().includes(val)) {
-          if (!matches.includes(h.query)) matches.push(h.query);
-        }
-      }
-    }
-
-    if (matches.length === 0) {
-      autocomplete.style.display = 'none';
-      searchInput.setAttribute('aria-expanded', 'false');
-      return;
-    }
-
-    autocomplete.innerHTML = matches.slice(0,5).map(m => `<div role="option" tabindex="0">${m}</div>`).join('');
-    autocomplete.style.display = 'block';
-    searchInput.setAttribute('aria-expanded', 'true');
-
-    // Seçeneklere tıklama ve klavye ile seçim
-    const options = autocomplete.querySelectorAll('[role=option]');
-    options.forEach(opt => {
-      opt.addEventListener('click', () => {
-        searchInput.value = opt.textContent.split(' (')[0];
-        autocomplete.style.display = 'none';
-        searchInput.setAttribute('aria-expanded', 'false');
-        searchInput.focus();
-      });
-      opt.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          opt.click();
-        }
-      });
-    });
+  robotVerifyBtn.addEventListener("click", () => {
+    isRobotVerified = true;
+    robotVerifyBtn.disabled = true;
+    robotStatus.textContent = "Robot doğrulaması tamamlandı. Arama yapabilirsiniz.";
+    robotStatus.classList.add("verified");
   });
 
-  // Robot doğrulaması basit: Kullanıcı fare hareketi yaparsa robot değil say
-  document.addEventListener('mousemove', () => {
-    mouseMoved = true;
-  });
-  setInterval(() => {
-    if (mouseMoved && !robotVerified) {
-      robotVerified = true;
-      document.getElementById('robotStatus').textContent = 'Doğrulandı';
-      document.getElementById('robotStatus').classList.remove('fail');
-      showNotification('Robot doğrulaması tamamlandı');
-    }
-  }, 2000);
-
-  // Başlangıçta kısayolları yükle
+  // ======= Başlangıç =======
   loadShortcuts();
   renderShortcuts();
+  loadHistory();
+  renderHistory();
+  updateCategoryUI();
 
-  // Temayı ve gizlilik modunu localStorage'da saklamak için iyileştirme yapılabilir.
+})();
 </script>
 
 </body>
