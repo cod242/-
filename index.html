@@ -3,677 +3,218 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MegaSearch</title>
+<title>Discord Benzeri Sesli/Görüntülü Sohbet</title>
 <style>
-  :root {
-    --color-bg: #0b1229;
-    --color-bg-alt: #14213d;
-    --color-text: #e5e5e5;
-    --color-accent: #fca311;
-    --color-accent-hover: #ffb84d;
-    --color-error: #e63946;
-    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  * {
-    box-sizing: border-box;
-  }
   body {
-    margin:0; padding:0;
-    font-family: var(--font-main);
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    user-select: none;
+    margin: 0; font-family: Arial, sans-serif; background:#2f3136; color:#fff;
+    display: flex; flex-direction: column; height: 100vh;
   }
   header {
-    margin: 1rem 0 0.5rem;
-    font-size: 2.5rem;
-    font-weight: 900;
-    letter-spacing: 4px;
-    color: var(--color-accent);
-    user-select: text;
+    background:#202225; padding:10px; text-align:center; font-size:20px;
   }
-  .search-area {
-    width: 90vw;
-    max-width: 650px;
-    margin-bottom: 0.75rem;
+  main {
+    flex: 1; display: flex; gap: 10px; padding: 10px;
+    flex-wrap: wrap; justify-content: center; align-items: flex-start;
   }
-  #searchInput {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 1.2rem;
-    border-radius: 40px;
-    border: none;
-    outline: none;
-    background-color: var(--color-bg-alt);
-    color: var(--color-text);
-    box-shadow: 0 0 10px #1118;
+  #localVideo, #remoteVideo {
+    width: 320px; border-radius: 8px; background: black;
   }
-  #searchInput::placeholder {
-    color: #aaa;
+  #controls {
+    flex-basis: 100%;
+    display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;
   }
-  .buttons-row {
-    margin-top: 0.5rem;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+  input, button {
+    padding: 8px; border-radius: 5px; border: none; font-size: 16px;
   }
-  button, .icon-btn {
-    background-color: var(--color-accent);
-    color: var(--color-bg);
-    font-weight: 700;
-    border: none;
-    border-radius: 30px;
-    padding: 0.5rem 1.2rem;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s ease;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  input {
+    width: 200px;
   }
-  button:hover, .icon-btn:hover {
-    background-color: var(--color-accent-hover);
+  button {
+    background: #7289da; color: white; cursor: pointer;
   }
-  #voiceSearchBtn {
-    font-size: 1.3rem;
-    padding: 0.5rem 0.8rem;
-    border-radius: 50%;
-    width: 40px; height: 40px;
-    justify-content: center;
+  #chat {
+    flex-basis: 100%; max-height: 200px; overflow-y: auto;
+    background: #36393f; padding: 10px; border-radius: 5px;
   }
-  #voiceSearchBtn:disabled {
-    background: #555 !important;
-    cursor: not-allowed;
-  }
-  .tabs {
-    margin: 1rem 0 1.5rem;
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-  }
-  .tab {
-    padding: 0.25rem 1rem;
-    cursor: pointer;
-    border-radius: 25px;
-    background-color: var(--color-bg-alt);
-    color: var(--color-text);
-    font-weight: 700;
-    user-select: none;
-    transition: background-color 0.25s ease;
-    border: 2px solid transparent;
-  }
-  .tab:hover {
-    background-color: var(--color-accent);
-    color: var(--color-bg);
-  }
-  .tab.active {
-    background-color: var(--color-accent);
-    color: var(--color-bg);
-    border-color: var(--color-bg);
-  }
-  #shortcutsContainer {
-    max-width: 650px;
-    width: 90vw;
-    margin-bottom: 1.5rem;
-    background-color: var(--color-bg-alt);
-    padding: 1rem 1.25rem;
-    border-radius: 12px;
-    box-shadow: 0 0 14px #111c inset;
-  }
-  .shortcut-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #141c40;
-    margin-bottom: 8px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    color: var(--color-text);
-  }
-  .shortcut-item:last-child {
-    margin-bottom: 0;
-  }
-  .shortcut-info {
-    flex: 1 1 auto;
-    user-select: text;
-    overflow-wrap: break-word;
-  }
-  .shortcut-actions {
-    display: flex;
-    gap: 0.5rem;
-  }
-  .shortcut-actions button {
-    background: transparent;
-    border: none;
-    color: var(--color-accent);
-    cursor: pointer;
-    font-size: 1.1rem;
-  }
-  .shortcut-actions button:hover {
-    color: var(--color-accent-hover);
-  }
-  #addShortcutBtn {
-    margin-bottom: 1rem;
-  }
-  /* Popup modal for add/edit shortcut */
-  #popupOverlay {
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(11,18,41,0.8);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  #popupContent {
-    background: var(--color-bg-alt);
-    padding: 1.5rem 2rem;
-    border-radius: 12px;
-    width: 90vw;
-    max-width: 400px;
-    box-shadow: 0 0 20px #000a;
-    color: var(--color-text);
-  }
-  #popupContent h3 {
-    margin-top: 0; margin-bottom: 1rem;
-    text-align: center;
-  }
-  #popupContent label {
-    display: block;
-    margin-bottom: 0.2rem;
-    font-weight: 700;
-  }
-  #popupContent input {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    border: none;
-    outline: none;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    background-color: #1c2541;
-    color: var(--color-text);
-  }
-  #popupContent input::placeholder {
-    color: #999;
-  }
-  #popupBtns {
-    text-align: center;
-  }
-  #popupBtns button {
-    margin: 0 0.5rem;
-    width: 100px;
-  }
-  /* Notification */
-  #notification {
-    position: fixed;
-    bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--color-accent);
-    color: var(--color-bg);
-    padding: 0.75rem 1.5rem;
-    border-radius: 24px;
-    box-shadow: 0 0 10px #ffa500cc;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-    user-select: none;
-    font-weight: 700;
-  }
-  #notification.show {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  /* History */
-  #historyContainer {
-    max-width: 650px;
-    width: 90vw;
-    background-color: var(--color-bg-alt);
-    border-radius: 12px;
-    padding: 1rem 1.25rem;
-    box-shadow: 0 0 14px #111c inset;
-    margin-bottom: 1.5rem;
-    max-height: 240px;
-    overflow-y: auto;
-    user-select: text;
-  }
-  .history-item {
-    padding: 0.4rem 0.6rem;
-    border-bottom: 1px solid #222d59;
-    cursor: pointer;
-  }
-  .history-item:last-child {
-    border-bottom: none;
-  }
-  .history-item:hover {
-    background-color: var(--color-accent);
-    color: var(--color-bg);
-  }
-  /* Privacy toggle */
-  .privacy-container {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 1.25rem;
-    justify-content: center;
-    color: var(--color-text);
-    user-select: none;
-  }
-  .privacy-container input[type="checkbox"] {
-    width: 18px; height: 18px;
-    cursor: pointer;
-  }
-  /* Robot Verification */
-  #robotStatus {
-    text-align: center;
-    margin-bottom: 0.75rem;
-    font-weight: 700;
-    color: var(--color-error);
-    user-select: none;
-  }
-  #robotStatus.verified {
-    color: #38b000;
+  #chat div {
+    margin-bottom: 5px;
   }
 </style>
 </head>
 <body>
 
-<header>MegaSearch</header>
+<header>Discord Benzeri Sesli/Görüntülü Sohbet (Frontend)</header>
 
-<section class="search-area" role="search" aria-label="MegaSearch Arama Alanı">
-  <input type="search" id="searchInput" placeholder="Aramak için yazın..." aria-autocomplete="list" aria-controls="autocompleteList" aria-expanded="false" aria-haspopup="listbox" autocomplete="off" />
-  <button id="voiceSearchBtn" aria-label="Sesli Arama Başlat" title="Sesli Arama Başlat">🎤</button>
-</section>
+<main>
+  <video id="localVideo" autoplay muted></video>
+  <video id="remoteVideo" autoplay></video>
 
-<div class="tabs" role="tablist" aria-label="Arama Kategorileri">
-  <div class="tab active" data-category="web" role="tab" tabindex="0" aria-selected="true">Web</div>
-  <div class="tab" data-category="images" role="tab" tabindex="-1" aria-selected="false">Görseller</div>
-  <div class="tab" data-category="news" role="tab" tabindex="-1" aria-selected="false">Haberler</div>
-  <div class="tab" data-category="videos" role="tab" tabindex="-1" aria-selected="false">Videolar</div>
-</div>
-
-<div class="buttons-row">
-  <button id="addShortcutBtn" aria-haspopup="dialog" aria-controls="popupOverlay" title="Kısayol Ekle">+ Kısayol Ekle</button>
-  <button id="clearHistoryBtn" title="Arama Geçmişini Temizle">Geçmişi Temizle</button>
-</div>
-
-<div id="robotStatus" aria-live="polite">Robot doğrulaması bekleniyor...</div>
-<button id="robotVerifyBtn" disabled>Ben robot değilim</button>
-
-<section id="shortcutsContainer" aria-label="Kısayollar Listesi" tabindex="0"></section>
-<section id="historyContainer" aria-label="Arama Geçmişi" tabindex="0"></section>
-
-<!-- Kısayol Ekle/Düzenle Popup -->
-<div id="popupOverlay" role="dialog" aria-modal="true" aria-labelledby="popupTitle" tabindex="-1">
-  <div id="popupContent">
-    <h3 id="popupTitle">Kısayol Ekle</h3>
-    <form id="shortcutForm">
-      <label for="shortcutName">İsim</label>
-      <input type="text" id="shortcutName" name="shortcutName" placeholder="Örn: YouTube" required maxlength="25" autocomplete="off" />
-      <label for="shortcutURL">URL (https:// ile başlayın)</label>
-      <input type="url" id="shortcutURL" name="shortcutURL" placeholder="https://youtube.com" required autocomplete="off" />
-      <div id="popupBtns">
-        <button type="submit" id="popupSaveBtn">Kaydet</button>
-        <button type="button" id="popupCancelBtn">İptal</button>
-      </div>
-    </form>
+  <div id="controls">
+    <input id="username" placeholder="Kullanıcı Adı" />
+    <input id="targetUser" placeholder="Aranacak Kullanıcı" />
+    <button id="connectBtn">Bağlan</button>
+    <button id="callBtn" disabled>Arama Başlat</button>
+    <button id="hangupBtn" disabled>Aramayı Sonlandır</button>
   </div>
-</div>
 
-<div id="notification" role="alert" aria-live="assertive"></div>
+  <div id="chat"></div>
+</main>
 
 <script>
-(() => {
-  "use strict";
+  const localVideo = document.getElementById('localVideo');
+  const remoteVideo = document.getElementById('remoteVideo');
+  const connectBtn = document.getElementById('connectBtn');
+  const callBtn = document.getElementById('callBtn');
+  const hangupBtn = document.getElementById('hangupBtn');
+  const chatDiv = document.getElementById('chat');
+  const usernameInput = document.getElementById('username');
+  const targetUserInput = document.getElementById('targetUser');
 
-  // ======= Ayarlar =======
-  const SEARCH_BASE_URL = "https://megasearch.example.com/search?q="; // Kendi motorunuza göre değiştirin
-  const SEARCH_BASE_URLS = {
-    web: SEARCH_BASE_URL,
-    images: SEARCH_BASE_URL + "&type=images",
-    news: SEARCH_BASE_URL + "&type=news",
-    videos: SEARCH_BASE_URL + "&type=videos"
+  let localStream;
+  let peerConnection;
+  let signalingSocket;
+  let username;
+
+  const servers = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+
+  function logChat(msg, fromSelf=false) {
+    const div = document.createElement('div');
+    div.textContent = (fromSelf ? 'Sen: ' : '') + msg;
+    chatDiv.appendChild(div);
+    chatDiv.scrollTop = chatDiv.scrollHeight;
+  }
+
+  connectBtn.onclick = async () => {
+    username = usernameInput.value.trim();
+    if(!username) return alert('Lütfen kullanıcı adınızı girin.');
+
+    signalingSocket = new WebSocket('ws://localhost:8080');
+    signalingSocket.onopen = () => {
+      signalingSocket.send(JSON.stringify({ type:'register', name: username }));
+      callBtn.disabled = false;
+      connectBtn.disabled = true;
+      usernameInput.disabled = true;
+      logChat('Sinyal sunucusuna bağlanıldı.');
+    };
+    signalingSocket.onmessage = async (event) => {
+      const msg = JSON.parse(event.data);
+      if(msg.type === 'signal' && msg.from) {
+        if(msg.data.sdp) {
+          if(msg.data.sdp.type === 'offer') {
+            await handleOffer(msg.data.sdp, msg.from);
+          } else if(msg.data.sdp.type === 'answer') {
+            await handleAnswer(msg.data.sdp);
+          }
+        } else if(msg.data.candidate) {
+          await handleCandidate(msg.data.candidate);
+        }
+      }
+    };
+    signalingSocket.onerror = (e) => {
+      alert('Sinyal sunucusuna bağlanırken hata oluştu.');
+      console.error(e);
+    };
   };
 
-  // ======= Elemanlar =======
-  const searchInput = document.getElementById("searchInput");
-  const voiceSearchBtn = document.getElementById("voiceSearchBtn");
-  const tabs = document.querySelectorAll(".tab");
-  const shortcutsContainer = document.getElementById("shortcutsContainer");
-  const addShortcutBtn = document.getElementById("addShortcutBtn");
-  const popupOverlay = document.getElementById("popupOverlay");
-  const shortcutForm = document.getElementById("shortcutForm");
-  const shortcutNameInput = document.getElementById("shortcutName");
-  const shortcutURLInput = document.getElementById("shortcutURL");
-  const popupCancelBtn = document.getElementById("popupCancelBtn");
-  const notification = document.getElementById("notification");
-  const historyContainer = document.getElementById("historyContainer");
-  const clearHistoryBtn = document.getElementById("clearHistoryBtn");
-  const robotStatus = document.getElementById("robotStatus");
-  const robotVerifyBtn = document.getElementById("robotVerifyBtn");
+  callBtn.onclick = async () => {
+    const target = targetUserInput.value.trim();
+    if(!target) return alert('Lütfen aranacak kullanıcı adını girin.');
 
-  // ======= Değişkenler =======
-  let shortcuts = [];
-  let history = [];
-  let selectedCategory = "web";
-  let isRobotVerified = false;
-  let editingShortcutIndex = -1;
+    await startLocalStream();
+    createPeerConnection(target);
 
-  // ======= Basit AES şifreleme/şifre çözme =======
-  // (Not: Basit örnek, gerçek için sunucu tarafı daha güvenli olmalı)
-  function encrypt(text, key) {
-    let result = "";
-    for(let i=0; i<text.length; i++) {
-      result += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-    }
-    return btoa(result);
-  }
-  function decrypt(base64, key) {
-    let text = atob(base64);
-    let result = "";
-    for(let i=0; i<text.length; i++) {
-      result += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-    }
-    return result;
-  }
-  const ENCRYPT_KEY = "MegaSearchSecretKey123!";
+    const offer = await peerConnection.createOffer();
+    await peerConnection.setLocalDescription(offer);
 
-  // ======= Bildirim =======
-  function showNotification(msg) {
-    notification.textContent = msg;
-    notification.classList.add("show");
-    setTimeout(() => notification.classList.remove("show"), 3500);
-  }
+    signalingSocket.send(JSON.stringify({
+      type: 'signal',
+      target,
+      data: { sdp: peerConnection.localDescription }
+    }));
 
-  // ======= Kısayollar Yükle/Göster =======
-  function loadShortcuts() {
+    logChat(`"${target}" kullanıcısına arama gönderildi.`, true);
+    callBtn.disabled = true;
+    hangupBtn.disabled = false;
+  };
+
+  hangupBtn.onclick = () => {
+    peerConnection.close();
+    peerConnection = null;
+    remoteVideo.srcObject = null;
+    hangupBtn.disabled = true;
+    callBtn.disabled = false;
+    logChat('Arama sonlandırıldı.', true);
+  };
+
+  async function startLocalStream() {
+    if(localStream) return;
     try {
-      let raw = localStorage.getItem("megaShortcuts");
-      if(raw) {
-        shortcuts = JSON.parse(raw);
-      } else {
-        // Örnek varsayılan kısayollar
-        shortcuts = [
-          {name:"YouTube", url:"https://youtube.com"},
-          {name:"Twitter", url:"https://twitter.com"},
-          {name:"GitHub", url:"https://github.com"},
-          {name:"News", url:"https://news.ycombinator.com"},
-          {name:"Images", url:"https://images.google.com"}
-        ];
-        saveShortcuts();
+      localStream = await navigator.mediaDevices.getUserMedia({ audio:true, video:true });
+      localVideo.srcObject = localStream;
+    } catch (e) {
+      alert('Kamera ve mikrofon erişimi reddedildi.');
+      throw e;
+    }
+  }
+
+  function createPeerConnection(target) {
+    peerConnection = new RTCPeerConnection(servers);
+
+    localStream.getTracks().forEach(track => {
+      peerConnection.addTrack(track, localStream);
+    });
+
+    peerConnection.onicecandidate = (event) => {
+      if(event.candidate) {
+        signalingSocket.send(JSON.stringify({
+          type: 'signal',
+          target,
+          data: { candidate: event.candidate }
+        }));
       }
+    };
+
+    peerConnection.ontrack = (event) => {
+      remoteVideo.srcObject = event.streams[0];
+    };
+
+    peerConnection.onconnectionstatechange = () => {
+      if(peerConnection.connectionState === 'disconnected' || peerConnection.connectionState === 'failed') {
+        hangupBtn.onclick();
+      }
+    };
+  }
+
+  async function handleOffer(sdp, from) {
+    await startLocalStream();
+    createPeerConnection(from);
+    await peerConnection.setRemoteDescription(new RTCSessionDescription(sdp));
+    const answer = await peerConnection.createAnswer();
+    await peerConnection.setLocalDescription(answer);
+
+    signalingSocket.send(JSON.stringify({
+      type: 'signal',
+      target: from,
+      data: { sdp: peerConnection.localDescription }
+    }));
+
+    logChat(`"${from}" kullanıcısından arama geldi.`);
+    callBtn.disabled = true;
+    hangupBtn.disabled = false;
+  }
+
+  async function handleAnswer(sdp) {
+    await peerConnection.setRemoteDescription(new RTCSessionDescription(sdp));
+    logChat('Arama kabul edildi.');
+  }
+
+  async function handleCandidate(candidate) {
+    try {
+      await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
     } catch(e) {
-      shortcuts = [];
+      console.error('ICE Candidate eklenirken hata:', e);
     }
   }
-  function saveShortcuts() {
-    localStorage.setItem("megaShortcuts", JSON.stringify(shortcuts));
-  }
-  function renderShortcuts() {
-    if(shortcuts.length === 0) {
-      shortcutsContainer.innerHTML = "<p style='text-align:center;color:#777;'>Kısayol bulunamadı. + ile ekleyin.</p>";
-      return;
-    }
-    shortcutsContainer.innerHTML = "";
-    shortcuts.forEach((sc,i) => {
-      const div = document.createElement("div");
-      div.className = "shortcut-item";
-      div.tabIndex = 0;
-      div.title = `Git: ${sc.name}`;
-      div.innerHTML = `<div class="shortcut-info">${sc.name}</div>
-        <div class="shortcut-actions">
-          <button aria-label="Düzenle" data-index="${i}" class="edit-btn">✏️</button>
-          <button aria-label="Sil" data-index="${i}" class="delete-btn">🗑️</button>
-        </div>`;
-      shortcutsContainer.appendChild(div);
-    });
-    // Kısayola tıklayınca o URL’yi yeni sekmede aç
-    shortcutsContainer.querySelectorAll(".shortcut-item").forEach(item => {
-      item.addEventListener("click", e => {
-        if(e.target.tagName === "BUTTON") return; // Butona tıklanıyorsa engelle
-        const index = [...shortcutsContainer.children].indexOf(item);
-        if(index >= 0 && shortcuts[index]) {
-          window.open(shortcuts[index].url, "_blank", "noopener");
-        }
-      });
-    });
-    // Düzenle butonları
-    shortcutsContainer.querySelectorAll(".edit-btn").forEach(btn => {
-      btn.addEventListener("click", e => {
-        e.stopPropagation();
-        editingShortcutIndex = +btn.dataset.index;
-        const sc = shortcuts[editingShortcutIndex];
-        shortcutNameInput.value = sc.name;
-        shortcutURLInput.value = sc.url;
-        popupOverlay.style.display = "flex";
-        shortcutNameInput.focus();
-        document.getElementById("popupTitle").textContent = "Kısayol Düzenle";
-      });
-    });
-    // Sil butonları
-    shortcutsContainer.querySelectorAll(".delete-btn").forEach(btn => {
-      btn.addEventListener("click", e => {
-        e.stopPropagation();
-        const idx = +btn.dataset.index;
-        if(confirm(`"${shortcuts[idx].name}" kısayolunu silmek istediğinize emin misiniz?`)) {
-          shortcuts.splice(idx, 1);
-          saveShortcuts();
-          renderShortcuts();
-          showNotification("Kısayol silindi.");
-        }
-      });
-    });
-  }
-
-  // ======= Arama Geçmişi =======
-  function loadHistory() {
-    try {
-      let raw = localStorage.getItem("megaHistory");
-      if(raw) {
-        // Şifre çöz
-        let dec = decrypt(raw, ENCRYPT_KEY);
-        history = JSON.parse(dec);
-      } else {
-        history = [];
-      }
-    } catch {
-      history = [];
-    }
-  }
-  function saveHistory() {
-    let enc = encrypt(JSON.stringify(history), ENCRYPT_KEY);
-    localStorage.setItem("megaHistory", enc);
-  }
-  function renderHistory() {
-    if(history.length === 0) {
-      historyContainer.innerHTML = "<p style='text-align:center;color:#777;'>Geçmiş boş.</p>";
-      return;
-    }
-    historyContainer.innerHTML = "";
-    history.slice().reverse().forEach(item => {
-      const div = document.createElement("div");
-      div.className = "history-item";
-      div.tabIndex = 0;
-      div.textContent = item.term + " [" + item.category + "]";
-      div.title = "Aramayı tekrarla";
-      div.addEventListener("click", () => {
-        searchInput.value = item.term;
-        selectedCategory = item.category;
-        updateCategoryUI();
-        doSearch();
-      });
-      historyContainer.appendChild(div);
-    });
-  }
-  function addHistory(term, category) {
-    if(!term.trim()) return;
-    // Aynı terim + kategori varsa sil (tekrar yok)
-    history = history.filter(h => !(h.term === term && h.category === category));
-    history.push({term, category});
-    if(history.length > 100) history.shift();
-    saveHistory();
-    renderHistory();
-  }
-  clearHistoryBtn.addEventListener("click", () => {
-    if(confirm("Arama geçmişini tamamen silmek istediğinize emin misiniz?")) {
-      history = [];
-      saveHistory();
-      renderHistory();
-      showNotification("Geçmiş temizlendi.");
-    }
-  });
-
-  // ======= Kategori seçimi =======
-  function updateCategoryUI() {
-    tabs.forEach(tab => {
-      if(tab.dataset.category === selectedCategory) {
-        tab.classList.add("active");
-        tab.setAttribute("aria-selected", "true");
-        tab.tabIndex = 0;
-      } else {
-        tab.classList.remove("active");
-        tab.setAttribute("aria-selected", "false");
-        tab.tabIndex = -1;
-      }
-    });
-  }
-  tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      selectedCategory = tab.dataset.category;
-      updateCategoryUI();
-      searchInput.focus();
-    });
-    tab.addEventListener("keydown", e => {
-      if(e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        tab.click();
-      }
-    });
-  });
-
-  // ======= Arama işlemi =======
-  function doSearch() {
-    if(!isRobotVerified) {
-      showNotification("Lütfen önce robot doğrulamasını yapın.");
-      return;
-    }
-    const query = searchInput.value.trim();
-    if(!query) return;
-    addHistory(query, selectedCategory);
-    // MegaSearch URL oluştur
-    let base = SEARCH_BASE_URLS[selectedCategory] || SEARCH_BASE_URLS.web;
-    // Basit URL encode
-    let url = base + encodeURIComponent(query);
-    window.location.href = url;
-  }
-  searchInput.addEventListener("keydown", e => {
-    if(e.key === "Enter") {
-      e.preventDefault();
-      doSearch();
-    }
-  });
-
-  // ======= Kısayol popup =======
-  addShortcutBtn.addEventListener("click", () => {
-    editingShortcutIndex = -1;
-    shortcutForm.reset();
-    document.getElementById("popupTitle").textContent = "Kısayol Ekle";
-    popupOverlay.style.display = "flex";
-    shortcutNameInput.focus();
-  });
-  popupCancelBtn.addEventListener("click", () => {
-    popupOverlay.style.display = "none";
-  });
-  shortcutForm.addEventListener("submit", e => {
-    e.preventDefault();
-    let name = shortcutNameInput.value.trim();
-    let url = shortcutURLInput.value.trim();
-    if(!name || !url) return;
-    if(!/^https?:\/\//i.test(url)) {
-      alert("URL mutlaka https:// veya http:// ile başlamalıdır.");
-      shortcutURLInput.focus();
-      return;
-    }
-    if(editingShortcutIndex >= 0) {
-      shortcuts[editingShortcutIndex] = {name, url};
-    } else {
-      shortcuts.push({name, url});
-    }
-    saveShortcuts();
-    renderShortcuts();
-    popupOverlay.style.display = "none";
-    showNotification(`Kısayol ${editingShortcutIndex >= 0 ? "güncellendi" : "eklendi"}.`);
-  });
-
-  // ======= Sesli arama =======
-  let recognition;
-  if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    recognition = new SpeechRecognition();
-    recognition.lang = 'tr-TR';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    recognition.onresult = e => {
-      let speechResult = e.results[0][0].transcript;
-      searchInput.value = speechResult;
-      recognition.stop();
-      doSearch();
-    };
-    recognition.onerror = e => {
-      showNotification("Sesli arama hatası: " + e.error);
-      recognition.stop();
-      voiceSearchBtn.disabled = false;
-    };
-    recognition.onend = () => {
-      voiceSearchBtn.disabled = false;
-    };
-  } else {
-    voiceSearchBtn.disabled = true;
-    voiceSearchBtn.title = "Tarayıcınız sesli aramayı desteklemiyor.";
-  }
-  voiceSearchBtn.addEventListener("click", () => {
-    if(isRobotVerified) {
-      voiceSearchBtn.disabled = true;
-      recognition.start();
-    } else {
-      showNotification("Önce robot doğrulamasını yapmalısınız.");
-    }
-  });
-
-  // ======= Robot doğrulama =======
-  // Fare hareketi ile aktifleşir
-  function enableRobotVerify() {
-    robotVerifyBtn.disabled = false;
-    robotStatus.textContent = "Robot doğrulaması için butona basın.";
-    window.removeEventListener("mousemove", onMouseMoveOnce);
-  }
-  function onMouseMoveOnce() {
-    enableRobotVerify();
-  }
-  window.addEventListener("mousemove", onMouseMoveOnce);
-
-  robotVerifyBtn.addEventListener("click", () => {
-    isRobotVerified = true;
-    robotVerifyBtn.disabled = true;
-    robotStatus.textContent = "Robot doğrulaması tamamlandı. Arama yapabilirsiniz.";
-    robotStatus.classList.add("verified");
-  });
-
-  // ======= Başlangıç =======
-  loadShortcuts();
-  renderShortcuts();
-  loadHistory();
-  renderHistory();
-  updateCategoryUI();
-
-})();
 </script>
 
 </body>
