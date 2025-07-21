@@ -1,221 +1,248 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Discord Benzeri Sesli/Görüntülü Sohbet</title>
-<style>
-  body {
-    margin: 0; font-family: Arial, sans-serif; background:#2f3136; color:#fff;
-    display: flex; flex-direction: column; height: 100vh;
-  }
-  header {
-    background:#202225; padding:10px; text-align:center; font-size:20px;
-  }
-  main {
-    flex: 1; display: flex; gap: 10px; padding: 10px;
-    flex-wrap: wrap; justify-content: center; align-items: flex-start;
-  }
-  #localVideo, #remoteVideo {
-    width: 320px; border-radius: 8px; background: black;
-  }
-  #controls {
-    flex-basis: 100%;
-    display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;
-  }
-  input, button {
-    padding: 8px; border-radius: 5px; border: none; font-size: 16px;
-  }
-  input {
-    width: 200px;
-  }
-  button {
-    background: #7289da; color: white; cursor: pointer;
-  }
-  #chat {
-    flex-basis: 100%; max-height: 200px; overflow-y: auto;
-    background: #36393f; padding: 10px; border-radius: 5px;
-  }
-  #chat div {
-    margin-bottom: 5px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoom Toplantı Linki</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2D8CFF;
+            --primary-dark: #1a7ae8;
+            --success: #4CAF50;
+            --success-dark: #3e8e41;
+            --bg-color: #f8faff;
+            --card-color: #ffffff;
+            --text-color: #2d3748;
+            --text-light: #718096;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            text-align: center;
+            background-color: var(--card-color);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            max-width: 580px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), #00c6ff);
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .description {
+            color: var(--text-light);
+            margin-bottom: 1.8rem;
+            font-size: 1rem;
+        }
+        
+        .zoom-card {
+            background-color: rgba(45, 140, 255, 0.05);
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border: 1px dashed rgba(45, 140, 255, 0.3);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .zoom-card:hover {
+            background-color: rgba(45, 140, 255, 0.1);
+        }
+        
+        .zoom-link {
+            word-break: break-all;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        .zoom-icon {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 2.5rem;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 1.8rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            min-width: 160px;
+        }
+        
+        .btn-open {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(45, 140, 255, 0.3);
+        }
+        
+        .btn-open:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn-copy {
+            background-color: var(--success);
+            color: white;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        
+        .btn-copy:hover {
+            background-color: var(--success-dark);
+            transform: translateY(-2px);
+        }
+        
+        .copied-message {
+            margin-top: 1.2rem;
+            color: var(--success);
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .visible {
+            opacity: 1;
+        }
+        
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.8rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                padding: 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="zoom-icon">
+            <i class="fas fa-video"></i>
+        </div>
+        <h1>Zoom Toplantı Linki</h1>
+        <p class="description">Aşağıdaki linki kullanarak toplantıya katılabilirsiniz</p>
+        
+        <div class="zoom-card">
+            <div class="zoom-link" id="zoomLink">
+                Şuan aktif bir toplantı bulunmamaktadır.
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn btn-open" id="openBtn">
+                <i class="fas fa-external-link-alt"></i> Zoom'u Aç
+            </button>
+            <button class="btn btn-copy" id="copyBtn">
+                <i class="far fa-copy"></i> Linki Kopyala
+            </button>
+        </div>
+        
+        <div class="copied-message" id="copiedMessage">
+            <i class="fas fa-check-circle"></i> Link panoya kopyalandı!
+        </div>
+        
+        <div class="footer">
+            Sorun yaşarsanız linki tarayıcınıza yapıştırabilirsiniz
+        </div>
+    </div>
 
-<header>Discord Benzeri Sesli/Görüntülü Sohbet (Frontend)</header>
-
-<main>
-  <video id="localVideo" autoplay muted></video>
-  <video id="remoteVideo" autoplay></video>
-
-  <div id="controls">
-    <input id="username" placeholder="Kullanıcı Adı" />
-    <input id="targetUser" placeholder="Aranacak Kullanıcı" />
-    <button id="connectBtn">Bağlan</button>
-    <button id="callBtn" disabled>Arama Başlat</button>
-    <button id="hangupBtn" disabled>Aramayı Sonlandır</button>
-  </div>
-
-  <div id="chat"></div>
-</main>
-
-<script>
-  const localVideo = document.getElementById('localVideo');
-  const remoteVideo = document.getElementById('remoteVideo');
-  const connectBtn = document.getElementById('connectBtn');
-  const callBtn = document.getElementById('callBtn');
-  const hangupBtn = document.getElementById('hangupBtn');
-  const chatDiv = document.getElementById('chat');
-  const usernameInput = document.getElementById('username');
-  const targetUserInput = document.getElementById('targetUser');
-
-  let localStream;
-  let peerConnection;
-  let signalingSocket;
-  let username;
-
-  const servers = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
-
-  function logChat(msg, fromSelf=false) {
-    const div = document.createElement('div');
-    div.textContent = (fromSelf ? 'Sen: ' : '') + msg;
-    chatDiv.appendChild(div);
-    chatDiv.scrollTop = chatDiv.scrollHeight;
-  }
-
-  connectBtn.onclick = async () => {
-    username = usernameInput.value.trim();
-    if(!username) return alert('Lütfen kullanıcı adınızı girin.');
-
-    signalingSocket = new WebSocket('ws://localhost:8080');
-    signalingSocket.onopen = () => {
-      signalingSocket.send(JSON.stringify({ type:'register', name: username }));
-      callBtn.disabled = false;
-      connectBtn.disabled = true;
-      usernameInput.disabled = true;
-      logChat('Sinyal sunucusuna bağlanıldı.');
-    };
-    signalingSocket.onmessage = async (event) => {
-      const msg = JSON.parse(event.data);
-      if(msg.type === 'signal' && msg.from) {
-        if(msg.data.sdp) {
-          if(msg.data.sdp.type === 'offer') {
-            await handleOffer(msg.data.sdp, msg.from);
-          } else if(msg.data.sdp.type === 'answer') {
-            await handleAnswer(msg.data.sdp);
-          }
-        } else if(msg.data.candidate) {
-          await handleCandidate(msg.data.candidate);
-        }
-      }
-    };
-    signalingSocket.onerror = (e) => {
-      alert('Sinyal sunucusuna bağlanırken hata oluştu.');
-      console.error(e);
-    };
-  };
-
-  callBtn.onclick = async () => {
-    const target = targetUserInput.value.trim();
-    if(!target) return alert('Lütfen aranacak kullanıcı adını girin.');
-
-    await startLocalStream();
-    createPeerConnection(target);
-
-    const offer = await peerConnection.createOffer();
-    await peerConnection.setLocalDescription(offer);
-
-    signalingSocket.send(JSON.stringify({
-      type: 'signal',
-      target,
-      data: { sdp: peerConnection.localDescription }
-    }));
-
-    logChat(`"${target}" kullanıcısına arama gönderildi.`, true);
-    callBtn.disabled = true;
-    hangupBtn.disabled = false;
-  };
-
-  hangupBtn.onclick = () => {
-    peerConnection.close();
-    peerConnection = null;
-    remoteVideo.srcObject = null;
-    hangupBtn.disabled = true;
-    callBtn.disabled = false;
-    logChat('Arama sonlandırıldı.', true);
-  };
-
-  async function startLocalStream() {
-    if(localStream) return;
-    try {
-      localStream = await navigator.mediaDevices.getUserMedia({ audio:true, video:true });
-      localVideo.srcObject = localStream;
-    } catch (e) {
-      alert('Kamera ve mikrofon erişimi reddedildi.');
-      throw e;
-    }
-  }
-
-  function createPeerConnection(target) {
-    peerConnection = new RTCPeerConnection(servers);
-
-    localStream.getTracks().forEach(track => {
-      peerConnection.addTrack(track, localStream);
-    });
-
-    peerConnection.onicecandidate = (event) => {
-      if(event.candidate) {
-        signalingSocket.send(JSON.stringify({
-          type: 'signal',
-          target,
-          data: { candidate: event.candidate }
-        }));
-      }
-    };
-
-    peerConnection.ontrack = (event) => {
-      remoteVideo.srcObject = event.streams[0];
-    };
-
-    peerConnection.onconnectionstatechange = () => {
-      if(peerConnection.connectionState === 'disconnected' || peerConnection.connectionState === 'failed') {
-        hangupBtn.onclick();
-      }
-    };
-  }
-
-  async function handleOffer(sdp, from) {
-    await startLocalStream();
-    createPeerConnection(from);
-    await peerConnection.setRemoteDescription(new RTCSessionDescription(sdp));
-    const answer = await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(answer);
-
-    signalingSocket.send(JSON.stringify({
-      type: 'signal',
-      target: from,
-      data: { sdp: peerConnection.localDescription }
-    }));
-
-    logChat(`"${from}" kullanıcısından arama geldi.`);
-    callBtn.disabled = true;
-    hangupBtn.disabled = false;
-  }
-
-  async function handleAnswer(sdp) {
-    await peerConnection.setRemoteDescription(new RTCSessionDescription(sdp));
-    logChat('Arama kabul edildi.');
-  }
-
-  async function handleCandidate(candidate) {
-    try {
-      await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
-    } catch(e) {
-      console.error('ICE Candidate eklenirken hata:', e);
-    }
-  }
-</script>
-
+    <script>
+        document.getElementById('openBtn').addEventListener('click', function() {
+            window.open(document.getElementById('zoomLink').textContent.trim(), '_blank');
+        });
+        
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const zoomLink = document.getElementById('zoomLink').textContent.trim();
+            navigator.clipboard.writeText(zoomLink).then(function() {
+                const message = document.getElementById('copiedMessage');
+                message.classList.add('visible');
+                setTimeout(function() {
+                    message.classList.remove('visible');
+                }, 2000);
+            }).catch(function() {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = zoomLink;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const message = document.getElementById('copiedMessage');
+                message.classList.add('visible');
+                setTimeout(function() {
+                    message.classList.remove('visible');
+                }, 2000);
+            });
+        });
+    </script>
 </body>
 </html>
