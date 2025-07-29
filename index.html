@@ -1,248 +1,108 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zoom Toplantı Linki</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2D8CFF;
-            --primary-dark: #1a7ae8;
-            --success: #4CAF50;
-            --success-dark: #3e8e41;
-            --bg-color: #f8faff;
-            --card-color: #ffffff;
-            --text-color: #2d3748;
-            --text-light: #718096;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            padding: 20px;
-        }
-        
-        .container {
-            text-align: center;
-            background-color: var(--card-color);
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            max-width: 580px;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: linear-gradient(90deg, var(--primary), #00c6ff);
-        }
-        
-        h1 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
-        }
-        
-        .description {
-            color: var(--text-light);
-            margin-bottom: 1.8rem;
-            font-size: 1rem;
-        }
-        
-        .zoom-card {
-            background-color: rgba(45, 140, 255, 0.05);
-            padding: 1.2rem;
-            border-radius: 12px;
-            margin: 1.5rem 0;
-            border: 1px dashed rgba(45, 140, 255, 0.3);
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .zoom-card:hover {
-            background-color: rgba(45, 140, 255, 0.1);
-        }
-        
-        .zoom-link {
-            word-break: break-all;
-            font-size: 0.95rem;
-            color: var(--text-color);
-            font-weight: 500;
-        }
-        
-        .zoom-icon {
-            margin-bottom: 1rem;
-            color: var(--primary);
-            font-size: 2.5rem;
-        }
-        
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 1.8rem;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            padding: 0.8rem 1.8rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 0.95rem;
-            min-width: 160px;
-        }
-        
-        .btn-open {
-            background-color: var(--primary);
-            color: white;
-            box-shadow: 0 4px 12px rgba(45, 140, 255, 0.3);
-        }
-        
-        .btn-open:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-        
-        .btn-copy {
-            background-color: var(--success);
-            color: white;
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-        }
-        
-        .btn-copy:hover {
-            background-color: var(--success-dark);
-            transform: translateY(-2px);
-        }
-        
-        .copied-message {
-            margin-top: 1.2rem;
-            color: var(--success);
-            font-weight: 600;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.9rem;
-        }
-        
-        .visible {
-            opacity: 1;
-        }
-        
-        .footer {
-            margin-top: 2rem;
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 1.8rem;
-            }
-            
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .btn {
-                width: 100%;
-                padding: 0.8rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oyun Yapımcısı Blogu</title>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0e0e0e;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc;
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      max-width: 600px;
+      height: 200px;
+      background: #1a1a1a;
+      border: 2px solid #444;
+      color: #fff;
+      font-size: 16px;
+      padding: 15px;
+      resize: vertical;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      transition: 0.3s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #00ffcc;
+      box-shadow: 0 0 10px #00ffcc55;
+    }
+
+    .g-recaptcha {
+      margin: 10px 0 20px;
+    }
+
+    button {
+      background: #00ffcc;
+      color: #000;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: not-allowed;
+      transition: all 0.3s ease;
+      opacity: 0.5;
+    }
+
+    button.enabled {
+      cursor: pointer;
+      opacity: 1;
+      box-shadow: 0 0 10px #00ffcc99;
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="zoom-icon">
-            <i class="fas fa-video"></i>
-        </div>
-        <h1>Zoom Toplantı Linki</h1>
-        <p class="description">Aşağıdaki linki kullanarak toplantıya katılabilirsiniz</p>
-        
-        <div class="zoom-card">
-            <div class="zoom-link" id="zoomLink">
-               
-            </div>
-        </div>
-        
-        <div class="buttons">
-            <button class="btn btn-open" id="openBtn">
-                <i class="fas fa-external-link-alt"></i> Zoom'u Aç
-            </button>
-            <button class="btn btn-copy" id="copyBtn">
-                <i class="far fa-copy"></i> Linki Kopyala
-            </button>
-        </div>
-        
-        <div class="copied-message" id="copiedMessage">
-            <i class="fas fa-check-circle"></i> Link panoya kopyalandı!
-        </div>
-        
-        <div class="footer">
-            Sorun yaşarsanız linki tarayıcınıza yapıştırabilirsiniz
-        </div>
-    </div>
 
-    <script>
-        document.getElementById('openBtn').addEventListener('click', function() {
-            window.open(document.getElementById('zoomLink').textContent.trim(), '_blank');
-        });
-        
-        document.getElementById('copyBtn').addEventListener('click', function() {
-            const zoomLink = document.getElementById('zoomLink').textContent.trim();
-            navigator.clipboard.writeText(zoomLink).then(function() {
-                const message = document.getElementById('copiedMessage');
-                message.classList.add('visible');
-                setTimeout(function() {
-                    message.classList.remove('visible');
-                }, 2000);
-            }).catch(function() {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = zoomLink;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                
-                const message = document.getElementById('copiedMessage');
-                message.classList.add('visible');
-                setTimeout(function() {
-                    message.classList.remove('visible');
-                }, 2000);
-            });
-        });
-    </script>
+  <h1>🎮 Oyun Yapımcısı Blogu</h1>
+
+  <textarea placeholder="Düşüncelerini paylaş, yeni bir şeyler üret..."></textarea>
+
+  <div class="g-recaptcha" data-sitekey="6Lc-r5MrAAAAAEcmT_-iNzsujUI2XXqkIb499vE_" data-callback="recaptchaVerified"></div>
+
+  <button id="submitBtn" disabled>Gönder</button>
+
+  <footer>© 2025 Tüm Hakları Saklıdır</footer>
+
+  <script>
+    function recaptchaVerified() {
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = false;
+      btn.classList.add('enabled');
+    }
+
+    // Opsiyonel: Form gönderimi için örnek event
+    document.getElementById('submitBtn').addEventListener('click', function () {
+      if (!this.disabled) {
+        alert("Mesajınız başarıyla gönderildi!");
+        // Burada backend'e gönderim yapılabilir
+      }
+    });
+  </script>
+
 </body>
 </html>
