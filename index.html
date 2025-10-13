@@ -1,108 +1,1008 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Oyun Yapımcısı Blogu</title>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="keywords" content="oto kurtarma, çekici hizmeti, yol yardım, acil çekici, bursa oto kurtarma, 7/24 çekici, kaza kurtarma, araç çekici, furkan oto kurtarma">
+  <meta name="description" content="Furkan Oto Kurtarma - Türkiye genelinde 7/24 profesyonel çekici, oto kurtarma ve yol yardım hizmetleri sunmaktadır.">
+  <title>Furkan Oto Kurtarıcı</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <style>
-    body {
+    :root {
+      --primary: #d9230f;
+      --secondary: #ff5722;
+      --light: #fff;
+      --dark: #0a0a0a;
+      --darker: #000;
+      --gray: #121212;
+      --accent: #ff0000;
+      --highlight: #ff5722;
+      --shadow: 0 10px 30px rgba(0,0,0,0.5);
+      --glow: 0 0 15px rgba(217, 35, 15, 0.7);
+    }
+
+    * {
       margin: 0;
       padding: 0;
-      background: #0e0e0e;
+      box-sizing: border-box;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+    }
+
+    body {
+      line-height: 1.6;
+      color: var(--light);
+      background: 
+        linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23000"/><path d="M0 0L100 100M100 0L0 100" stroke="%231a1a1a" stroke-width="1"/></svg>');
+      background-size: 30px 30px;
+      overflow-x: hidden;
       min-height: 100vh;
-      padding: 40px 20px;
     }
 
-    h1 {
-      color: #00ffcc;
-      text-shadow: 0 0 10px #00ffcc;
-      margin-bottom: 20px;
+    /* HEADER */
+    header {
+      background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('https://www.reklamzamani.net/dosyalar/dosya/696187828.png') center / cover no-repeat;
+      color: var(--light);
+      min-height: 40vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 4rem 0;
     }
 
-    textarea {
-      width: 100%;
-      max-width: 600px;
-      height: 200px;
-      background: #1a1a1a;
-      border: 2px solid #444;
-      color: #fff;
-      font-size: 16px;
-      padding: 15px;
-      resize: vertical;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      transition: 0.3s ease;
+    .logo-container {
+      position: relative;
+      z-index: 2;
+      perspective: 1000px;
     }
 
-    textarea:focus {
-      outline: none;
-      border-color: #00ffcc;
-      box-shadow: 0 0 10px #00ffcc55;
+    .logo {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+      position: relative;
+      animation: logoGlow 2s infinite alternate;
+      transform-style: preserve-3d;
     }
 
-    .g-recaptcha {
-      margin: 10px 0 20px;
+    @keyframes logoGlow {
+      0% { text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
+      100% { text-shadow: 0 0 25px rgba(255, 0, 0, 0.9), 0 0 35px rgba(255, 0, 0, 0.7); }
     }
 
-    button {
-      background: #00ffcc;
-      color: #000;
-      border: none;
-      padding: 12px 25px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: not-allowed;
+    nav {
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 0.8rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--glow);
+      border-bottom: 1px solid rgba(217, 35, 15, 0.3);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 10px;
+    }
+
+    nav ul li a {
+      color: var(--light);
+      text-decoration: none;
+      padding: 0.7rem 1.2rem;
+      display: block;
+      font-weight: 600;
       transition: all 0.3s ease;
-      opacity: 0.5;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
     }
 
-    button.enabled {
-      cursor: pointer;
+    nav ul li a::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(217, 35, 15, 0.3), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+      z-index: -1;
+    }
+
+    nav ul li a:hover::before {
+      transform: translateX(0);
+    }
+
+    nav ul li a:hover {
+      background: rgba(217, 35, 15, 0.2);
+      transform: translateY(-2px);
+      border-color: var(--primary);
+      box-shadow: var(--glow);
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .emergency-btn {
+      display: block;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: var(--light);
+      text-decoration: none;
+      font-size: 1.6rem;
+      padding: 18px;
+      margin: 30px auto;
+      border-radius: 12px;
+      width: 95%;
+      text-align: center;
+      transition: all 0.4s ease;
+      box-shadow: var(--glow), var(--shadow);
+      border: 2px solid var(--accent);
+      font-weight: 800;
+      position: relative;
+      overflow: hidden;
+      animation: emergencyPulse 2s infinite;
+      letter-spacing: 1px;
+    }
+
+    @keyframes emergencyPulse {
+      0% { box-shadow: var(--glow), var(--shadow); }
+      50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.8), var(--shadow); }
+      100% { box-shadow: var(--glow), var(--shadow); }
+    }
+
+    section {
+      margin-bottom: 40px;
+      background: rgba(18, 18, 18, 0.85);
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    h2 {
+      color: var(--accent);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      font-size: 2.2rem;
+      position: relative;
+      text-align: center;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+    }
+
+    h2::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      border-radius: 2px;
+    }
+
+    /* HAKKIMIZDA BÖLÜMÜ - MOBILE OPTIMIZED */
+    .about-section {
+      background: rgba(15, 15, 15, 0.7);
+      padding: 20px;
+      border-radius: 15px;
+      line-height: 1.7;
+      color: #e0e0e0;
+    }
+
+    .about-section h3 {
+      font-size: 1.4rem;
+      color: var(--accent);
+      margin: 18px 0 12px 0;
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .about-section h3::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--primary);
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+
+    .about-section p {
+      margin-bottom: 15px;
+      font-size: 1rem;
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    /* HİZMETLERİMİZ - MOBILE OPTIMIZED */
+    .services {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .service-card {
+      background: rgba(20, 20, 20, 0.9);
+      padding: 25px;
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(217, 35, 15, 0.3);
+      background: rgba(25, 25, 25, 0.95);
+    }
+
+    .service-card h3 {
+      color: var(--accent);
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    .service-card p {
+      color: #ddd;
+      font-size: 1rem;
+    }
+
+    /* FOTOĞRAFLAR - MOBILE OPTIMIZED */
+    #gallery {
+      background: rgba(18, 18, 18, 0.85);
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    #gallery .slider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto 15px auto;
+      background: rgba(20, 20, 20, 0.8);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 220px;
+    }
+
+    #gallery .slider-images {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #gallery .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: opacity 0.4s;
+      background: #111;
+    }
+
+    #gallery .slide.active {
+      display: block;
       opacity: 1;
-      box-shadow: 0 0 10px #00ffcc99;
+    }
+
+    #gallery .slider-btn {
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 1.4rem;
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      transition: all 0.3s;
+      box-shadow: 0 0 12px rgba(0,0,0,0.5);
+    }
+
+    #gallery .slider-btn.prev { left: 8px; }
+    #gallery .slider-btn.next { right: 8px; }
+
+    #gallery .slider-btn:hover {
+      background: var(--primary);
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 0 18px rgba(217, 35, 15, 0.7);
+    }
+
+    #gallery .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 15px 0 0 0;
+    }
+
+    #gallery .dot {
+      width: 12px;
+      height: 12px;
+      background: #444;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid #555;
+    }
+
+    #gallery .dot.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      transform: scale(1.2);
+      box-shadow: 0 0 8px rgba(217, 35, 15, 0.5);
+    }
+
+    #gallery .big-view-btn {
+      display: block;
+      margin: 15px auto 0 auto;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 40px;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: var(--glow);
+      width: 80%;
+      max-width: 250px;
+    }
+
+    #gallery .big-view-btn:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+    }
+
+    /* İLETİŞİM - MOBILE OPTIMIZED */
+    .contact-methods {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 25px;
+      margin-top: 25px;
+    }
+
+    .contact-card {
+      background: rgba(20, 20, 20, 0.9);
+      padding: 30px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      transition: all 0.4s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card h3 {
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-size: 1.6rem;
+      text-align: center;
+    }
+
+    .phone {
+      font-size: 1.8rem;
+      color: var(--accent);
+      font-weight: 800;
+      margin: 15px 0;
+      display: block;
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    .phone a {
+      color: inherit;
+      text-decoration: none;
+      display: block;
+      margin: 8px 0;
+    }
+
+    .email-btn {
+      display: inline-block;
+      background: linear-gradient(45deg, var(--dark), #222);
+      color: var(--light);
+      text-decoration: none;
+      padding: 14px 25px;
+      border-radius: 40px;
+      margin-top: 15px;
+      transition: all 0.4s ease;
+      border: 1px solid var(--primary);
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      display: block;
+      text-align: center;
+      max-width: 280px;
+      margin: 15px auto 0 auto;
+    }
+
+    .email-btn:hover {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      transform: translateY(-4px);
+      box-shadow: var(--glow);
+      letter-spacing: 1.5px;
     }
 
     footer {
-      margin-top: 50px;
-      font-size: 14px;
-      color: #666;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>🎮 Oyun Yapımcısı Blogu</h1>
-
-  <textarea placeholder="Düşüncelerini paylaş, yeni bir şeyler üret..."></textarea>
-
-  <div class="g-recaptcha" data-sitekey="6Lc-r5MrAAAAAEcmT_-iNzsujUI2XXqkIb499vE_" data-callback="recaptchaVerified"></div>
-
-  <button id="submitBtn" disabled>Gönder</button>
-
-  <footer>© 2025 Tüm Hakları Saklıdır</footer>
-
-  <script>
-    function recaptchaVerified() {
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = false;
-      btn.classList.add('enabled');
+      background: rgba(5, 5, 5, 0.95);
+      color: var(--light);
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      margin-top: 60px;
+      position: relative;
+      border-top: 1px solid rgba(217, 35, 15, 0.3);
     }
 
-    // Opsiyonel: Form gönderimi için örnek event
-    document.getElementById('submitBtn').addEventListener('click', function () {
-      if (!this.disabled) {
-        alert("Mesajınız başarıyla gönderildi!");
-        // Burada backend'e gönderim yapılabilir
+    footer::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+
+    footer p {
+      font-size: 1.1rem;
+      letter-spacing: 1.5px;
+      color: #ccc;
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.2);
+    }
+
+    /* HESAP MAKİNESİ - MOBILE OPTIMIZED */
+    #calculatorToggleBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: var(--glow), var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      animation: floatCalc 3s ease-in-out infinite;
+    }
+
+    @keyframes floatCalc {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(4deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    #calculatorToggleBtn:hover {
+      transform: scale(1.12) rotate(8deg);
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.8), var(--shadow);
+    }
+
+    .calculator-wrapper {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: calc(100% - 40px);
+      max-width: 400px;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      z-index: 998;
+      display: none;
+      transform: translateY(25px) scale(0.95);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .calculator {
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .display {
+      background: rgba(0, 0, 0, 0.7);
+      color: var(--accent);
+      font-size: 36px;
+      text-align: right;
+      padding: 18px;
+      height: 80px;
+      overflow: hidden;
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255, 0, 0, 0.3);
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.5);
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 18px;
+      background: rgba(15, 15, 15, 0.8);
+      width: 100%;
+      border-radius: 18px;
+    }
+
+    .button {
+      height: 60px;
+      font-size: 22px;
+      border: none;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .button:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    }
+
+    .button:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .button.operator {
+      background: linear-gradient(135deg, #ff9f0a, #ff6f00);
+      color: white;
+    }
+
+    .button.number {
+      background: linear-gradient(135deg, #333333, #222222);
+      color: white;
+    }
+
+    .button.zero {
+      grid-column: span 2;
+      border-radius: 20px;
+    }
+
+    .button.gray {
+      background: linear-gradient(135deg, #555555, #444444);
+      color: white;
+    }
+
+    .button.equal {
+      background: linear-gradient(135deg, #ff9500, #ff5722);
+      color: white;
+    }
+
+    /* Harita */
+    #map iframe {
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      width: 100%;
+      height: 300px;
+    }
+
+    /* Responsive adjustments */
+    @media (min-width: 768px) {
+      .services {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       }
-    });
-  </script>
+      
+      .contact-methods {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+      
+      .calculator-wrapper {
+        width: 320px;
+        right: 30px;
+        bottom: 110px;
+      }
+      
+      #gallery .slider-images {
+        height: 250px;
+        max-width: 400px;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .container {
+        padding: 30px;
+      }
+      
+      .emergency-btn {
+        font-size: 2rem;
+        padding: 22px;
+        width: 90%;
+        max-width: 550px;
+      }
+      
+      h2 {
+        font-size: 2.6rem;
+      }
+    }
+    </style>
+  </head>
+  <body>
+  <!-- HEADER -->
+  <header>
+    <div class="logo-container">
+      <div class="logo" data-text="FURKAN OTO KURTARMA">FURKAN OTO KURTARMA</div>
+    </div>
+  </header>
+<!-- MAIN CONTENT -->
+<div class="container">
 
-</body>
+  <!-- ACİL DURUM BUTONU -->
+  <a href="tel:05321541043" class="emergency-btn">
+    <i class="fas fa-phone-alt"></i> HEMEN ARA: 0532 154 10 43
+  </a>
+
+  <!-- HAKKIMIZDA -->
+  <section id="about">
+    <h2>Hakkımızda</h2>
+    <div class="about-section">
+      <h3>Kimiz?</h3>
+      <p>
+        Furkan Oto Kurtarma olarak 7/24 kesintisiz şekilde Türkiye genelinde hizmet veriyoruz.
+        Arızalı ya da kazaya karışmış aracınızın bulunduğu yerden güvenle taşınmasını sağlıyor,
+        uzman ekip sayesinde hızlı ve kaliteli çözüm sunuyoruz.
+      </p>
+
+      <h3>Misyonumuz</h3>
+      <p>
+        Misyonumuz, yolda kalan herkesin yardımına koşmak ve en kısa sürede çözüme kavuşturmak.
+        Güven, hız ve deneyim üçgeniyle hareket ederek tüm müşterilerimize aynı standartta hizmet vermeyi amaçlıyoruz.
+      </p>
+
+      <h3>Vizyonumuz</h3>
+      <p>
+        Vizyonumuz, Türkiye'nin en yaygın ve en güvenilir oto kurtarma markası olmak.
+        Her geçen gün büyüyen filomuzla ve teknolojik altyapımızla hizmet alanımızı genişletmeyi sürdürüyoruz.
+      </p>
+
+      <h3>Neden Furkan Oto Kurtarma?</h3>
+      <p>
+        Çünkü her an çekerinizde olmaktan mutluluk duyarız. Uzman kadromuz, modern ekipmanlarımız ve hızlı yanıt sistemimizle
+        siz değerli kullanıcılarımıza her konuda destek oluyoruz. Sadece Bursa'da değil, tüm Türkiye’de 7/24 aktifiz.
+      </p>
+    </div>
+  </section>
+  
+  <!-- HARİTA -->
+  <h2>Harita</h2>
+  <section id="map">
+    <p style="text-align:center; margin-bottom:15px;">Furkan Oto Kurtarma'nın merkezi konumu:</p>
+<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d381.06449440751015!2d29.0993805!3d40.1753297!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14ca3c29999c6bbb%3A0x78c0f4a97cf6fc03!2zWsO8bXLDvHRldmxlciwgS3VydGJhc2FuIENkLiBObzoxNTQsIDE2MzQwIFnEsWxkxLFyxLFtL0J1cnNh!5e0!3m2!1sen!2str!4v1751205821291!5m2!1sen!2str" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+<!-- FOTOĞRAFLAR -->
+<section id="gallery">
+  <h2>Fotoğraflar</h2>
+  <div class="slider" tabindex="0">
+    <button class="slider-btn prev" onclick="changeSlide(-1)" aria-label="Önceki Fotoğraf">&#10094;</button>
+    <div class="slider-images">
+      <img src="https://i.hizliresim.com/q3nm388.jpg" class="slide active" alt="Furkan Oto Kurtarma 1" loading="lazy" onclick="openModal(this)">
+      <img src="https://i.hizliresim.com/3nu5q5k.jpg" class="slide" alt="Furkan Oto Kurtarma 2" loading="lazy" onclick="openModal(this)">
+      <img src="https://i.hizliresim.com/goehduc.jpg" class="slide" alt="Furkan Oto Kurtarma 3" loading="lazy" onclick="openModal(this)">
+      <img src="https://i.hizliresim.com/bh35z0x.jpg" class="slide" alt="Furkan Oto Kurtarma 4" loading="lazy" onclick="openModal(this)">
+      <img src="https://i.hizliresim.com/2cpdhtw.jpg" class="slide" alt="Furkan Oto Kurtarma 5" loading="lazy" onclick="openModal(this)">
+      <img src="https://i.hizliresim.com/5rweeqy.jpg" class="slide" alt="Furkan Oto Kurtarma 6" loading="lazy" onclick="openModal(this)">
+      <img src="https://i.hizliresim.com/95n31ha.jpg" class="slide" alt="Furkan Oto Kurtarma 7" loading="lazy" onclick="openModal(this)">
+    </div>
+    <button class="slider-btn next" onclick="changeSlide(1)" aria-label="Sonraki Fotoğraf">&#10095;</button>
+  </div>
+  <div class="slider-dots">
+    <span class="dot active" onclick="goToSlide(0)"></span>
+    <span class="dot" onclick="goToSlide(1)"></span>
+    <span class="dot" onclick="goToSlide(2)"></span>
+    <span class="dot" onclick="goToSlide(3)"></span>
+    <span class="dot" onclick="goToSlide(4)"></span>
+    <span class="dot" onclick="goToSlide(5)"></span>
+    <span class="dot" onclick="goToSlide(6)"></span>
+  </div>
+  <button class="big-view-btn" onclick="openModal(getSlides()[slideIndex])">
+    <i class="fas fa-expand"></i> Büyüt
+  </button>
+</section>
+
+<script>
+  let slideIndex = 0;
+  function getSlides() {
+    return document.querySelectorAll('#gallery .slide');
+  }
+  function getDots() {
+    return document.querySelectorAll('#gallery .dot');
+  }
+  function showSlide(n) {
+    const slides = getSlides();
+    const dots = getDots();
+    if (n >= slides.length) slideIndex = 0;
+    if (n < 0) slideIndex = slides.length - 1;
+    slides.forEach((img, i) => {
+      img.classList.toggle('active', i === slideIndex);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === slideIndex);
+    });
+  }
+  function changeSlide(n) {
+    slideIndex += n;
+    showSlide(slideIndex);
+  }
+  function goToSlide(n) {
+    slideIndex = n;
+    showSlide(slideIndex);
+  }
+
+  // Modal for big view (with arrows)
+  function openModal(img) {
+    if (!img) return;
+    const slides = Array.from(getSlides());
+    let modalIndex = slides.indexOf(img);
+    const oldModal = document.getElementById('gallery-modal');
+    if (oldModal) oldModal.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'gallery-modal';
+    modal.style.position = 'fixed';
+    modal.style.top = 0;
+    modal.style.left = 0;
+    modal.style.width = '100vw';
+    modal.style.height = '100vh';
+    modal.style.background = 'rgba(0,0,0,0.95)';
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.style.zIndex = 9999;
+    modal.onclick = function(e) {
+      if (e.target === modal) document.body.removeChild(modal);
+    };
+
+    const bigImg = document.createElement('img');
+    bigImg.src = img.src;
+    bigImg.alt = img.alt;
+    bigImg.style.maxWidth = '95vw';
+    bigImg.style.maxHeight = '90vh';
+    bigImg.style.borderRadius = '16px';
+    bigImg.style.boxShadow = '0 0 40px rgba(217, 35, 15, 0.5)';
+    bigImg.tabIndex = 0;
+    modal.appendChild(bigImg);
+
+    const leftBtn = document.createElement('button');
+    leftBtn.className = 'gallery-modal-arrow left';
+    leftBtn.innerHTML = '&#10094;';
+    leftBtn.style.position = 'fixed';
+    leftBtn.style.top = '50%';
+    leftBtn.style.left = '15px';
+    leftBtn.style.transform = 'translateY(-50%)';
+    leftBtn.style.background = 'rgba(0,0,0,0.7)';
+    leftBtn.style.color = '#fff';
+    leftBtn.style.border = 'none';
+    leftBtn.style.borderRadius = '50%';
+    leftBtn.style.width = '40px';
+    leftBtn.style.height = '40px';
+    leftBtn.style.fontSize = '1.5rem';
+    leftBtn.style.cursor = 'pointer';
+    leftBtn.style.zIndex = '10000';
+    leftBtn.style.boxShadow = '0 0 15px rgba(0,0,0,0.5)';
+    leftBtn.onclick = function(e) {
+      e.stopPropagation();
+      modalIndex = (modalIndex - 1 + slides.length) % slides.length;
+      bigImg.src = slides[modalIndex].src;
+      bigImg.alt = slides[modalIndex].alt;
+      slideIndex = modalIndex;
+      showSlide(slideIndex);
+    };
+    modal.appendChild(leftBtn);
+
+    const rightBtn = document.createElement('button');
+    rightBtn.className = 'gallery-modal-arrow right';
+    rightBtn.innerHTML = '&#10095;';
+    rightBtn.style.position = 'fixed';
+    rightBtn.style.top = '50%';
+    rightBtn.style.right = '15px';
+    rightBtn.style.transform = 'translateY(-50%)';
+    rightBtn.style.background = 'rgba(0,0,0,0.7)';
+    rightBtn.style.color = '#fff';
+    rightBtn.style.border = 'none';
+    rightBtn.style.borderRadius = '50%';
+    rightBtn.style.width = '40px';
+    rightBtn.style.height = '40px';
+    rightBtn.style.fontSize = '1.5rem';
+    rightBtn.style.cursor = 'pointer';
+    rightBtn.style.zIndex = '10000';
+    rightBtn.style.boxShadow = '0 0 15px rgba(0,0,0,0.5)';
+    rightBtn.onclick = function(e) {
+      e.stopPropagation();
+      modalIndex = (modalIndex + 1) % slides.length;
+      bigImg.src = slides[modalIndex].src;
+      bigImg.alt = slides[modalIndex].alt;
+      slideIndex = modalIndex;
+      showSlide(slideIndex);
+    };
+    modal.appendChild(rightBtn);
+
+    function modalKeyHandler(e) {
+      if (!document.getElementById('gallery-modal')) return;
+      if (e.key === 'ArrowLeft') leftBtn.onclick(e);
+      if (e.key === 'ArrowRight') rightBtn.onclick(e);
+      if (e.key === 'Escape') {
+        document.body.removeChild(modal);
+        document.removeEventListener('keydown', modalKeyHandler);
+      }
+    }
+    document.addEventListener('keydown', modalKeyHandler);
+
+    document.body.appendChild(modal);
+    bigImg.focus();
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (document.activeElement.closest('#gallery') && !document.getElementById('gallery-modal')) {
+      if (e.key === 'ArrowLeft') { changeSlide(-1); }
+      if (e.key === 'ArrowRight') { changeSlide(1); }
+    }
+  });
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    let startX = 0;
+    const slider = document.querySelector('#gallery .slider');
+    if (!slider) return;
+    slider.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    });
+    slider.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (dx > 40) changeSlide(-1);
+      else if (dx < -40) changeSlide(1);
+    });
+    showSlide(slideIndex);
+  });
+</script>
+
+  <!-- HİZMETLERİMİZ -->
+  <section id="services">
+    <h2>Hizmetlerimiz</h2>
+    <div class="services">
+      <div class="service-card">
+        <h3>Oto Çekici</h3>
+        <p>Arızalı aracınızı bulunduğunuz her noktadan güvenle taşıyoruz. 7/24 kesintisiz hizmet.</p>
+      </div>
+      <div class="service-card">
+        <h3>Kaza Kurtarma</h3>
+        <p>Kazaya karışan araçlarınız için profesyonel çekici hizmeti. Hızlı ve güvenli müdahale.</p>
+      </div>
+      <div class="service-card">
+        <h3>Yol Yardım</h3>
+        <p>Yolda kalan araçlarınıza Türkiye'nin her yerinde anında destek. Uzman ekip, hızlı çözüm.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUNLARI BİLİYOR MUYDUNUZ? -->
+  <section id="fun-facts" style="background:rgba(25,25,25,0.9); border-left:3px solid var(--primary); padding:25px; margin:40px 0; border-radius:15px;">
+    <h3 style="font-size:1.8rem; color:var(--accent); margin-bottom:20px; display:flex; align-items:center; gap:12px;">
+      <i class="fas fa-lightbulb"></i> Bunları Biliyor Muydunuz?
+    </h3>
+    <p id="factText" style="font-size:1.2rem; color:#eee; line-height:1.6;">Yükleniyor...</p>
+  </section>
+
+  <!-- İLETİŞİM -->
+  <section id="contact">
+    <h2>7/24 Bize Ulaşın</h2>
+    <div class="contact-methods">
+      <div class="contact-card">
+        <h3>Telefon</h3>
+        <div class="phone">
+          <a href="tel:05321541043">0532 154 10 43</a>
+          <a href="tel:05322051192">0532 205 11 92</a>
+        </div>
+        <p style="color:#aaa; font-size:1rem; text-align:center;">7/24 aktif destek hattı</p>
+      </div>
+      <div class="contact-card">
+        <h3>E-posta</h3>
+        <p style="color:#ccc; margin-bottom:15px; text-align:center;">Bize e-posta göndermek için:</p>
+        <a href="mailto:furkanotokurtarma61@gmail.com" class="email-btn">
+          <i class="fas fa-envelope"></i> furkanotokurtarma61@gmail.com
+        </a>
+      </div>
+      <div class="contact-card">
+        <h3 style="color:var(--accent); margin-bottom:20px;">Türkiye Geneli Hizmet</h3>
+        <p style="color:#ccc; font-size:1.1rem; text-align:center;">Tüm illerimize 7/24 ulaşım sağlıyoruz</p>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- FOOTER -->
+<footer>
+  <p>FURKAN OTO KURTARMA - Türkiye'nin En Güvenilir Çekici Hizmeti</p>
+</footer>
+
+<!-- DİNAMİK BİLGİ KUTUSU -->
+<script>
+  const facts = [
+    "Türkiye'de her yıl yaklaşık 500.000 araç arızalanıyor ve çekiciye ihtiyaç duyuyor.",
+    "Otomobil sayısı artarken, yolda kalan araçların %70’i 10 dakika içinde yardım alabiliyor.",
+    "Çekici servislerinin hızı, kazalar sonrası can kaybını azaltmada önemli rol oynuyor.",
+    "Güvenli sürüş alışkanlıkları, yolda kalmayı %40 oranında azaltabilir.",
+    "Furkan Oto Kurtarma, Bursa merkezli olarak Türkiye'nin tüm illerine hizmet veriyor.",
+    "Yolda kalan araçların %30'u lastik arızaları nedeniyle çekici çağırıyor.",
+    "Çekici hizmetleri, kış aylarında %60 artış gösteriyor.",
+    "Araç çekilmesi durumlarında %95 müşteri memnuniyeti sağlanıyor.",
+    "Sürüş esnasında yaşanan elektrik arızaları en çok tercih edilen çekici sebeplerinden biridir.",
+    "Furkan Oto Kurtarma, 7/24 kesintisiz hizmet veren tek isimlerden biridir."
+  ];
+
+  function getRandomFact() {
+    return facts[Math.floor(Math.random() * facts.length)];
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("factText").textContent = getRandomFact();
+  });
+</script>
 </html>
