@@ -33,7 +33,7 @@
       color: var(--light);
       background: 
         linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23000"/><path d="M0 0L100 100M100 0L0 100" stroke="%231a1a1a" stroke-width="1"/></svg>');
+        url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23000"/><path d="M0 0L100 100M100 0L0 100" stroke="%231a1a1a" stroke-width="1"/></svg>');
       background-size: 30px 30px;
       overflow-x: hidden;
       min-height: 100vh;
@@ -160,7 +160,7 @@
       letter-spacing: 1px;
     }
 
-    @keyforms emergencyPulse {
+    @keyframes emergencyPulse {
       0% { box-shadow: var(--glow), var(--shadow); }
       50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.8), var(--shadow); }
       100% { box-shadow: var(--glow), var(--shadow); }
@@ -773,6 +773,46 @@
       transform: translateY(-5px) scale(1.05);
       box-shadow: 0 0 30px rgba(225, 48, 108, 0.7);
     }
+
+    /* Game Button */
+    #gameButton {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: linear-gradient(135deg, #ff9500, #ff5722);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 87, 34, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      animation: bounce 2s infinite;
+    }
+
+    #gameButton:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 87, 34, 0.6);
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-8px); }
+      60% { transform: translateY(-4px); }
+    }
+
+    @media (max-width: 768px) {
+      #gameButton {
+        font-size: 12px;
+        padding: 10px 15px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -787,6 +827,11 @@
       <i class="fab fa-instagram"></i> Furkan Oto Kurtarma
     </a>
   </div>
+
+  <!-- Game Button -->
+  <a href="https://cod242.github.io/otokurtarmaoyun/" id="gameButton" target="_blank">
+    <i class="fas fa-gamepad"></i> İndirim için oyunu oyna!
+  </a>
 
   <!-- HEADER -->
   <header>
