@@ -160,7 +160,7 @@
       letter-spacing: 1px;
     }
 
-    @keyframes emergencyPulse {
+    @keyforms emergencyPulse {
       0% { box-shadow: var(--glow), var(--shadow); }
       50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.8), var(--shadow); }
       100% { box-shadow: var(--glow), var(--shadow); }
@@ -685,318 +685,436 @@
         font-size: 2.6rem;
       }
     }
-    </style>
-  </head>
-  <body>
+
+    /* Instagram Popup */
+    #instagram-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    #instagram-popup .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    #instagram-popup .close-btn:hover {
+      background: rgba(255, 0, 0, 0.3);
+      transform: scale(1.1);
+    }
+
+    #instagram-popup .instagram-icon {
+      font-size: 120px;
+      color: #E1306C;
+      margin-bottom: 30px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    #instagram-popup .popup-text {
+      color: white;
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 600;
+      text-shadow: 0 0 10px rgba(225, 48, 108, 0.5);
+    }
+
+    #instagram-popup .instagram-link {
+      background: linear-gradient(45deg, #E1306C, #FD1D1D);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(225, 48, 108, 0.5);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    #instagram-popup .instagram-link:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 0 30px rgba(225, 48, 108, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <!-- Instagram Popup -->
+  <div id="instagram-popup">
+    <button class="close-btn" onclick="closeInstagramPopup()">×</button>
+    <div class="instagram-icon">
+      <i class="fab fa-instagram"></i>
+    </div>
+    <div class="popup-text">Bizi Instagram'dan Takip Edin!</div>
+    <a href="https://www.instagram.com/furkanotokurtarma16?igsh=MThobWhkMDNidDN3dQ%3D%3D&utm_source=qr" class="instagram-link" target="_blank">
+      <i class="fab fa-instagram"></i> Furkan Oto Kurtarma
+    </a>
+  </div>
+
   <!-- HEADER -->
   <header>
     <div class="logo-container">
       <div class="logo" data-text="FURKAN OTO KURTARMA">FURKAN OTO KURTARMA</div>
     </div>
   </header>
-<!-- MAIN CONTENT -->
-<div class="container">
-
-  <!-- HEMEN ARA BUTONU -->
-  <a href="tel:05321541043" class="emergency-btn">
-    <i class="fas fa-phone-alt"></i> HEMEN ARA: 0532 154 10 43
-  </a>
-
-  <!-- HAKKIMIZDA -->
-  <section id="about">
-    <h2>Hakkımızda</h2>
-    <div class="about-section">
-      <h3>Kimiz?</h3>
-      <p>
-        Furkan Oto Kurtarma olarak 7/24 kesintisiz şekilde Türkiye genelinde hizmet veriyoruz.
-        Arızalı ya da kazaya karışmış aracınızın bulunduğu yerden güvenle taşınmasını sağlıyor,
-        uzman ekip sayesinde hızlı ve kaliteli çözüm sunuyoruz.
-      </p>
-
-      <h3>Misyonumuz</h3>
-      <p>
-        Misyonumuz, yolda kalan herkesin yardımına koşmak ve en kısa sürede çözüme kavuşturmak.
-        Güven, hız ve deneyim üçgeniyle hareket ederek tüm müşterilerimize aynı standartta hizmet vermeyi amaçlıyoruz.
-      </p>
-
-      <h3>Vizyonumuz</h3>
-      <p>
-        Vizyonumuz, Türkiye'nin en yaygın ve en güvenilir oto kurtarma markası olmak.
-        Her geçen gün büyüyen filomuzla ve teknolojik altyapımızla hizmet alanımızı genişletmeyi sürdürüyoruz.
-      </p>
-
-      <h3>Neden Furkan Oto Kurtarma?</h3>
-      <p>
-        Çünkü her an çekerinizde olmaktan mutluluk duyarız. Uzman kadromuz, modern ekipmanlarımız ve hızlı yanıt sistemimizle
-        siz değerli kullanıcılarımıza her konuda destek oluyoruz. Sadece Bursa'da değil, tüm Türkiye’de 7/24 aktifiz.
-      </p>
-    </div>
-  </section>  
-<!-- FOTOĞRAFLAR -->
-<section id="gallery">
-  <h2>Fotoğraflar</h2>
-  <div class="slider" tabindex="0">
-    <button class="slider-btn prev" onclick="changeSlide(-1)" aria-label="Önceki Fotoğraf">&#10094;</button>
-    <div class="slider-images">
-      <img src="https://i.hizliresim.com/q3nm388.jpg" class="slide active" alt="Furkan Oto Kurtarma 1" loading="lazy" onclick="openModal(this)">
-      <img src="https://i.hizliresim.com/3nu5q5k.jpg" class="slide" alt="Furkan Oto Kurtarma 2" loading="lazy" onclick="openModal(this)">
-      <img src="https://i.hizliresim.com/goehduc.jpg" class="slide" alt="Furkan Oto Kurtarma 3" loading="lazy" onclick="openModal(this)">
-      <img src="https://i.hizliresim.com/bh35z0x.jpg" class="slide" alt="Furkan Oto Kurtarma 4" loading="lazy" onclick="openModal(this)">
-      <img src="https://i.hizliresim.com/2cpdhtw.jpg" class="slide" alt="Furkan Oto Kurtarma 5" loading="lazy" onclick="openModal(this)">
-      <img src="https://i.hizliresim.com/5rweeqy.jpg" class="slide" alt="Furkan Oto Kurtarma 6" loading="lazy" onclick="openModal(this)">
-      <img src="https://i.hizliresim.com/95n31ha.jpg" class="slide" alt="Furkan Oto Kurtarma 7" loading="lazy" onclick="openModal(this)">
-    </div>
-    <button class="slider-btn next" onclick="changeSlide(1)" aria-label="Sonraki Fotoğraf">&#10095;</button>
-  </div>
-  <div class="slider-dots">
-    <span class="dot active" onclick="goToSlide(0)"></span>
-    <span class="dot" onclick="goToSlide(1)"></span>
-    <span class="dot" onclick="goToSlide(2)"></span>
-    <span class="dot" onclick="goToSlide(3)"></span>
-    <span class="dot" onclick="goToSlide(4)"></span>
-    <span class="dot" onclick="goToSlide(5)"></span>
-    <span class="dot" onclick="goToSlide(6)"></span>
-  </div>
-  <button class="big-view-btn" onclick="openModal(getSlides()[slideIndex])">
-    <i class="fas fa-expand"></i> Büyüt
-  </button>
-</section>
-
-<script>
-  let slideIndex = 0;
-  function getSlides() {
-    return document.querySelectorAll('#gallery .slide');
-  }
-  function getDots() {
-    return document.querySelectorAll('#gallery .dot');
-  }
-  function showSlide(n) {
-    const slides = getSlides();
-    const dots = getDots();
-    if (n >= slides.length) slideIndex = 0;
-    if (n < 0) slideIndex = slides.length - 1;
-    slides.forEach((img, i) => {
-      img.classList.toggle('active', i === slideIndex);
-    });
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === slideIndex);
-    });
-  }
-  function changeSlide(n) {
-    slideIndex += n;
-    showSlide(slideIndex);
-  }
-  function goToSlide(n) {
-    slideIndex = n;
-    showSlide(slideIndex);
-  }
-
-  // Modal for big view (with arrows)
-  function openModal(img) {
-    if (!img) return;
-    const slides = Array.from(getSlides());
-    let modalIndex = slides.indexOf(img);
-    const oldModal = document.getElementById('gallery-modal');
-    if (oldModal) oldModal.remove();
-
-    const modal = document.createElement('div');
-    modal.id = 'gallery-modal';
-    modal.style.position = 'fixed';
-    modal.style.top = 0;
-    modal.style.left = 0;
-    modal.style.width = '100vw';
-    modal.style.height = '100vh';
-    modal.style.background = 'rgba(0,0,0,0.95)';
-    modal.style.display = 'flex';
-    modal.style.alignItems = 'center';
-    modal.style.justifyContent = 'center';
-    modal.style.zIndex = 9999;
-    modal.onclick = function(e) {
-      if (e.target === modal) document.body.removeChild(modal);
-    };
-
-    const bigImg = document.createElement('img');
-    bigImg.src = img.src;
-    bigImg.alt = img.alt;
-    bigImg.style.maxWidth = '95vw';
-    bigImg.style.maxHeight = '90vh';
-    bigImg.style.borderRadius = '16px';
-    bigImg.style.boxShadow = '0 0 40px rgba(217, 35, 15, 0.5)';
-    bigImg.tabIndex = 0;
-    modal.appendChild(bigImg);
-
-    const leftBtn = document.createElement('button');
-    leftBtn.className = 'gallery-modal-arrow left';
-    leftBtn.innerHTML = '&#10094;';
-    leftBtn.style.position = 'fixed';
-    leftBtn.style.top = '50%';
-    leftBtn.style.left = '15px';
-    leftBtn.style.transform = 'translateY(-50%)';
-    leftBtn.style.background = 'rgba(0,0,0,0.7)';
-    leftBtn.style.color = '#fff';
-    leftBtn.style.border = 'none';
-    leftBtn.style.borderRadius = '50%';
-    leftBtn.style.width = '40px';
-    leftBtn.style.height = '40px';
-    leftBtn.style.fontSize = '1.5rem';
-    leftBtn.style.cursor = 'pointer';
-    leftBtn.style.zIndex = '10000';
-    leftBtn.style.boxShadow = '0 0 15px rgba(0,0,0,0.5)';
-    leftBtn.onclick = function(e) {
-      e.stopPropagation();
-      modalIndex = (modalIndex - 1 + slides.length) % slides.length;
-      bigImg.src = slides[modalIndex].src;
-      bigImg.alt = slides[modalIndex].alt;
-      slideIndex = modalIndex;
-      showSlide(slideIndex);
-    };
-    modal.appendChild(leftBtn);
-
-    const rightBtn = document.createElement('button');
-    rightBtn.className = 'gallery-modal-arrow right';
-    rightBtn.innerHTML = '&#10095;';
-    rightBtn.style.position = 'fixed';
-    rightBtn.style.top = '50%';
-    rightBtn.style.right = '15px';
-    rightBtn.style.transform = 'translateY(-50%)';
-    rightBtn.style.background = 'rgba(0,0,0,0.7)';
-    rightBtn.style.color = '#fff';
-    rightBtn.style.border = 'none';
-    rightBtn.style.borderRadius = '50%';
-    rightBtn.style.width = '40px';
-    rightBtn.style.height = '40px';
-    rightBtn.style.fontSize = '1.5rem';
-    rightBtn.style.cursor = 'pointer';
-    rightBtn.style.zIndex = '10000';
-    rightBtn.style.boxShadow = '0 0 15px rgba(0,0,0,0.5)';
-    rightBtn.onclick = function(e) {
-      e.stopPropagation();
-      modalIndex = (modalIndex + 1) % slides.length;
-      bigImg.src = slides[modalIndex].src;
-      bigImg.alt = slides[modalIndex].alt;
-      slideIndex = modalIndex;
-      showSlide(slideIndex);
-    };
-    modal.appendChild(rightBtn);
-
-    function modalKeyHandler(e) {
-      if (!document.getElementById('gallery-modal')) return;
-      if (e.key === 'ArrowLeft') leftBtn.onclick(e);
-      if (e.key === 'ArrowRight') rightBtn.onclick(e);
-      if (e.key === 'Escape') {
-        document.body.removeChild(modal);
-        document.removeEventListener('keydown', modalKeyHandler);
-      }
-    }
-    document.addEventListener('keydown', modalKeyHandler);
-
-    document.body.appendChild(modal);
-    bigImg.focus();
-  }
-
-  document.addEventListener('keydown', function(e) {
-    if (document.activeElement.closest('#gallery') && !document.getElementById('gallery-modal')) {
-      if (e.key === 'ArrowLeft') { changeSlide(-1); }
-      if (e.key === 'ArrowRight') { changeSlide(1); }
-    }
-  });
   
-  document.addEventListener('DOMContentLoaded', function() {
-    let startX = 0;
-    const slider = document.querySelector('#gallery .slider');
-    if (!slider) return;
-    slider.addEventListener('touchstart', e => {
-      startX = e.touches[0].clientX;
-    });
-    slider.addEventListener('touchend', e => {
-      const dx = e.changedTouches[0].clientX - startX;
-      if (dx > 40) changeSlide(-1);
-      else if (dx < -40) changeSlide(1);
-    });
-    showSlide(slideIndex);
-  });
-</script>
+  <!-- MAIN CONTENT -->
+  <div class="container">
 
-  <!-- HİZMETLERİMİZ -->
-  <section id="services">
-    <h2>Hizmetlerimiz</h2>
-    <div class="services">
-      <div class="service-card">
-        <h3>Oto Çekici</h3>
-        <p>Arızalı aracınızı bulunduğunuz her noktadan güvenle taşıyoruz. 7/24 kesintisiz hizmet.</p>
-      </div>
-      <div class="service-card">
-        <h3>Kaza Kurtarma</h3>
-        <p>Kazaya karışan araçlarınız için profesyonel çekici hizmeti. Hızlı ve güvenli müdahale.</p>
-      </div>
-      <div class="service-card">
-        <h3>Yol Yardım</h3>
-        <p>Yolda kalan araçlarınıza Türkiye'nin her yerinde anında destek. Uzman ekip, hızlı çözüm.</p>
-      </div>
-    </div>
-  </section>
+    <!-- HEMEN ARA BUTONU -->
+    <a href="tel:05321541043" class="emergency-btn">
+      <i class="fas fa-phone-alt"></i> HEMEN ARA: 0532 154 10 43
+    </a>
 
-  <!-- BUNLARI BİLİYOR MUYDUNUZ? -->
-  <section id="fun-facts" style="background:rgba(25,25,25,0.9); border-left:3px solid var(--primary); padding:25px; margin:40px 0; border-radius:15px;">
-    <h3 style="font-size:1.8rem; color:var(--accent); margin-bottom:20px; display:flex; align-items:center; gap:12px;">
-      <i class="fas fa-lightbulb"></i> Bunları Biliyor Muydunuz?
-    </h3>
-    <p id="factText" style="font-size:1.2rem; color:#eee; line-height:1.6;">Yükleniyor...</p>
-  </section>
+    <!-- HAKKIMIZDA -->
+    <section id="about">
+      <h2>Hakkımızda</h2>
+      <div class="about-section">
+        <h3>Kimiz?</h3>
+        <p>
+          Furkan Oto Kurtarma olarak 7/24 kesintisiz şekilde Türkiye genelinde hizmet veriyoruz.
+          Arızalı ya da kazaya karışmış aracınızın bulunduğu yerden güvenle taşınmasını sağlıyor,
+          uzman ekip sayesinde hızlı ve kaliteli çözüm sunuyoruz.
+        </p>
 
-  <!-- İLETİŞİM -->
-  <section id="contact">
-    <h2>7/24 Bize Ulaşın</h2>
-    <div class="contact-methods">
-      <div class="contact-card">
-        <h3>Telefon</h3>
-        <div class="phone">
-          <a href="tel:05321541043">0532 154 10 43</a>
-          <a href="tel:05322051192">0532 205 11 92</a>
+        <h3>Misyonumuz</h3>
+        <p>
+          Misyonumuz, yolda kalan herkesin yardımına koşmak ve en kısa sürede çözüme kavuşturmak.
+          Güven, hız ve deneyim üçgeniyle hareket ederek tüm müşterilerimize aynı standartta hizmet vermeyi amaçlıyoruz.
+        </p>
+
+        <h3>Vizyonumuz</h3>
+        <p>
+          Vizyonumuz, Türkiye'nin en yaygın ve en güvenilir oto kurtarma markası olmak.
+          Her geçen gün büyüyen filomuzla ve teknolojik altyapımızla hizmet alanımızı genişletmeyi sürdürüyoruz.
+        </p>
+
+        <h3>Neden Furkan Oto Kurtarma?</h3>
+        <p>
+          Çünkü her an çekerinizde olmaktan mutluluk duyarız. Uzman kadromuz, modern ekipmanlarımız ve hızlı yanıt sistemimizle
+          siz değerli kullanıcılarımıza her konuda destek oluyoruz. Sadece Bursa'da değil, tüm Türkiye’de 7/24 aktifiz.
+        </p>
+      </div>
+    </section>  
+  
+    <!-- FOTOĞRAFLAR -->
+    <section id="gallery">
+      <h2>Fotoğraflar</h2>
+      <div class="slider" tabindex="0">
+        <button class="slider-btn prev" onclick="changeSlide(-1)" aria-label="Önceki Fotoğraf">&#10094;</button>
+        <div class="slider-images">
+          <img src="https://i.hizliresim.com/q3nm388.jpg" class="slide active" alt="Furkan Oto Kurtarma 1" loading="lazy" onclick="openModal(this)">
+          <img src="https://i.hizliresim.com/3nu5q5k.jpg" class="slide" alt="Furkan Oto Kurtarma 2" loading="lazy" onclick="openModal(this)">
+          <img src="https://i.hizliresim.com/goehduc.jpg" class="slide" alt="Furkan Oto Kurtarma 3" loading="lazy" onclick="openModal(this)">
+          <img src="https://i.hizliresim.com/bh35z0x.jpg" class="slide" alt="Furkan Oto Kurtarma 4" loading="lazy" onclick="openModal(this)">
+          <img src="https://i.hizliresim.com/2cpdhtw.jpg" class="slide" alt="Furkan Oto Kurtarma 5" loading="lazy" onclick="openModal(this)">
+          <img src="https://i.hizliresim.com/5rweeqy.jpg" class="slide" alt="Furkan Oto Kurtarma 6" loading="lazy" onclick="openModal(this)">
+          <img src="https://i.hizliresim.com/95n31ha.jpg" class="slide" alt="Furkan Oto Kurtarma 7" loading="lazy" onclick="openModal(this)">
         </div>
-        <p style="color:#aaa; font-size:1rem; text-align:center;">7/24 aktif destek hattı</p>
+        <button class="slider-btn next" onclick="changeSlide(1)" aria-label="Sonraki Fotoğraf">&#10095;</button>
       </div>
-      <div class="contact-card">
-        <h3>E-posta</h3>
-        <p style="color:#ccc; margin-bottom:15px; text-align:center;">Bize e-posta göndermek için:</p>
-        <a href="mailto:furkanotokurtarma61@gmail.com" class="email-btn">
-          <i class="fas fa-envelope"></i> furkanotokurtarma61@gmail.com
-        </a>
+      <div class="slider-dots">
+        <span class="dot active" onclick="goToSlide(0)"></span>
+        <span class="dot" onclick="goToSlide(1)"></span>
+        <span class="dot" onclick="goToSlide(2)"></span>
+        <span class="dot" onclick="goToSlide(3)"></span>
+        <span class="dot" onclick="goToSlide(4)"></span>
+        <span class="dot" onclick="goToSlide(5)"></span>
+        <span class="dot" onclick="goToSlide(6)"></span>
       </div>
-      <div class="contact-card">
-        <h3 style="color:var(--accent); margin-bottom:20px;">Türkiye Geneli Hizmet</h3>
-        <p style="color:#ccc; font-size:1.1rem; text-align:center;">Tüm illerimize 7/24 ulaşım sağlıyoruz</p>
+      <button class="big-view-btn" onclick="openModal(getSlides()[slideIndex])">
+        <i class="fas fa-expand"></i> Büyüt
+      </button>
+    </section>
+
+    <script>
+      let slideIndex = 0;
+      function getSlides() {
+        return document.querySelectorAll('#gallery .slide');
+      }
+      function getDots() {
+        return document.querySelectorAll('#gallery .dot');
+      }
+      function showSlide(n) {
+        const slides = getSlides();
+        const dots = getDots();
+        if (n >= slides.length) slideIndex = 0;
+        if (n < 0) slideIndex = slides.length - 1;
+        slides.forEach((img, i) => {
+          img.classList.toggle('active', i === slideIndex);
+        });
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === slideIndex);
+        });
+      }
+      function changeSlide(n) {
+        slideIndex += n;
+        showSlide(slideIndex);
+      }
+      function goToSlide(n) {
+        slideIndex = n;
+        showSlide(slideIndex);
+      }
+
+      // Modal for big view (with arrows)
+      function openModal(img) {
+        if (!img) return;
+        const slides = Array.from(getSlides());
+        let modalIndex = slides.indexOf(img);
+        const oldModal = document.getElementById('gallery-modal');
+        if (oldModal) oldModal.remove();
+
+        const modal = document.createElement('div');
+        modal.id = 'gallery-modal';
+        modal.style.position = 'fixed';
+        modal.style.top = 0;
+        modal.style.left = 0;
+        modal.style.width = '100vw';
+        modal.style.height = '100vh';
+        modal.style.background = 'rgba(0,0,0,0.95)';
+        modal.style.display = 'flex';
+        modal.style.alignItems = 'center';
+        modal.style.justifyContent = 'center';
+        modal.style.zIndex = 9999;
+        modal.onclick = function(e) {
+          if (e.target === modal) document.body.removeChild(modal);
+        };
+
+        const bigImg = document.createElement('img');
+        bigImg.src = img.src;
+        bigImg.alt = img.alt;
+        bigImg.style.maxWidth = '95vw';
+        bigImg.style.maxHeight = '90vh';
+        bigImg.style.borderRadius = '16px';
+        bigImg.style.boxShadow = '0 0 40px rgba(217, 35, 15, 0.5)';
+        bigImg.tabIndex = 0;
+        modal.appendChild(bigImg);
+
+        const leftBtn = document.createElement('button');
+        leftBtn.className = 'gallery-modal-arrow left';
+        leftBtn.innerHTML = '&#10094;';
+        leftBtn.style.position = 'fixed';
+        leftBtn.style.top = '50%';
+        leftBtn.style.left = '15px';
+        leftBtn.style.transform = 'translateY(-50%)';
+        leftBtn.style.background = 'rgba(0,0,0,0.7)';
+        leftBtn.style.color = '#fff';
+        leftBtn.style.border = 'none';
+        leftBtn.style.borderRadius = '50%';
+        leftBtn.style.width = '40px';
+        leftBtn.style.height = '40px';
+        leftBtn.style.fontSize = '1.5rem';
+        leftBtn.style.cursor = 'pointer';
+        leftBtn.style.zIndex = '10000';
+        leftBtn.style.boxShadow = '0 0 15px rgba(0,0,0,0.5)';
+        leftBtn.onclick = function(e) {
+          e.stopPropagation();
+          modalIndex = (modalIndex - 1 + slides.length) % slides.length;
+          bigImg.src = slides[modalIndex].src;
+          bigImg.alt = slides[modalIndex].alt;
+          slideIndex = modalIndex;
+          showSlide(slideIndex);
+        };
+        modal.appendChild(leftBtn);
+
+        const rightBtn = document.createElement('button');
+        rightBtn.className = 'gallery-modal-arrow right';
+        rightBtn.innerHTML = '&#10095;';
+        rightBtn.style.position = 'fixed';
+        rightBtn.style.top = '50%';
+        rightBtn.style.right = '15px';
+        rightBtn.style.transform = 'translateY(-50%)';
+        rightBtn.style.background = 'rgba(0,0,0,0.7)';
+        rightBtn.style.color = '#fff';
+        rightBtn.style.border = 'none';
+        rightBtn.style.borderRadius = '50%';
+        rightBtn.style.width = '40px';
+        rightBtn.style.height = '40px';
+        rightBtn.style.fontSize = '1.5rem';
+        rightBtn.style.cursor = 'pointer';
+        rightBtn.style.zIndex = '10000';
+        rightBtn.style.boxShadow = '0 0 15px rgba(0,0,0,0.5)';
+        rightBtn.onclick = function(e) {
+          e.stopPropagation();
+          modalIndex = (modalIndex + 1) % slides.length;
+          bigImg.src = slides[modalIndex].src;
+          bigImg.alt = slides[modalIndex].alt;
+          slideIndex = modalIndex;
+          showSlide(slideIndex);
+        };
+        modal.appendChild(rightBtn);
+
+        function modalKeyHandler(e) {
+          if (!document.getElementById('gallery-modal')) return;
+          if (e.key === 'ArrowLeft') leftBtn.onclick(e);
+          if (e.key === 'ArrowRight') rightBtn.onclick(e);
+          if (e.key === 'Escape') {
+            document.body.removeChild(modal);
+            document.removeEventListener('keydown', modalKeyHandler);
+          }
+        }
+        document.addEventListener('keydown', modalKeyHandler);
+
+        document.body.appendChild(modal);
+        bigImg.focus();
+      }
+
+      document.addEventListener('keydown', function(e) {
+        if (document.activeElement.closest('#gallery') && !document.getElementById('gallery-modal')) {
+          if (e.key === 'ArrowLeft') { changeSlide(-1); }
+          if (e.key === 'ArrowRight') { changeSlide(1); }
+        }
+      });
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        let startX = 0;
+        const slider = document.querySelector('#gallery .slider');
+        if (!slider) return;
+        slider.addEventListener('touchstart', e => {
+          startX = e.touches[0].clientX;
+        });
+        slider.addEventListener('touchend', e => {
+          const dx = e.changedTouches[0].clientX - startX;
+          if (dx > 40) changeSlide(-1);
+          else if (dx < -40) changeSlide(1);
+        });
+        showSlide(slideIndex);
+      });
+
+      // Instagram Popup Functions
+      function closeInstagramPopup() {
+        const popup = document.getElementById('instagram-popup');
+        popup.style.display = 'none';
+      }
+
+      // Close popup when clicking outside the content
+      document.getElementById('instagram-popup').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeInstagramPopup();
+        }
+      });
+    </script>
+
+    <!-- HİZMETLERİMİZ -->
+    <section id="services">
+      <h2>Hizmetlerimiz</h2>
+      <div class="services">
+        <div class="service-card">
+          <h3>Oto Çekici</h3>
+          <p>Arızalı aracınızı bulunduğunuz her noktadan güvenle taşıyoruz. 7/24 kesintisiz hizmet.</p>
+        </div>
+        <div class="service-card">
+          <h3>Kaza Kurtarma</h3>
+          <p>Kazaya karışan araçlarınız için profesyonel çekici hizmeti. Hızlı ve güvenli müdahale.</p>
+        </div>
+        <div class="service-card">
+          <h3>Yol Yardım</h3>
+          <p>Yolda kalan araçlarınıza Türkiye'nin her yerinde anında destek. Uzman ekip, hızlı çözüm.</p>
+        </div>
       </div>
-    </div>
-  </section>
-</div>
-<!-- FOOTER -->
-<footer>
-  <p>FURKAN OTO KURTARMA - Türkiye'nin En Güvenilir Çekici Hizmeti</p>
-  <p>Bu Site Profosyonel ekiple tasarlanmıştır.</p>
-</footer>
+    </section>
 
-<!-- DİNAMİK BİLGİ KUTUSU -->
-<script>
-  const facts = [
-    "Türkiye'de her yıl yaklaşık 500.000 araç arızalanıyor ve çekiciye ihtiyaç duyuyor.",
-    "Otomobil sayısı artarken, yolda kalan araçların %70’i 10 dakika içinde yardım alabiliyor.",
-    "Çekici servislerinin hızı, kazalar sonrası can kaybını azaltmada önemli rol oynuyor.",
-    "Güvenli sürüş alışkanlıkları, yolda kalmayı %40 oranında azaltabilir.",
-    "Furkan Oto Kurtarma, Bursa merkezli olarak Türkiye'nin tüm illerine hizmet veriyor.",
-    "Yolda kalan araçların %30'u lastik arızaları nedeniyle çekici çağırıyor.",
-    "Çekici hizmetleri, kış aylarında %60 artış gösteriyor.",
-    "Araç çekilmesi durumlarında %95 müşteri memnuniyeti sağlanıyor.",
-    "Sürüş esnasında yaşanan elektrik arızaları en çok tercih edilen çekici sebeplerinden biridir.",
-    "Furkan Oto Kurtarma, 7/24 kesintisiz hizmet veren tek isimlerden biridir."
-  ];
+    <!-- BUNLARI BİLİYOR MUYDUNUZ? -->
+    <section id="fun-facts" style="background:rgba(25,25,25,0.9); border-left:3px solid var(--primary); padding:25px; margin:40px 0; border-radius:15px;">
+      <h3 style="font-size:1.8rem; color:var(--accent); margin-bottom:20px; display:flex; align-items:center; gap:12px;">
+        <i class="fas fa-lightbulb"></i> Bunları Biliyor Muydunuz?
+      </h3>
+      <p id="factText" style="font-size:1.2rem; color:#eee; line-height:1.6;">Yükleniyor...</p>
+    </section>
 
-  function getRandomFact() {
-    return facts[Math.floor(Math.random() * facts.length)];
-  }
+    <!-- İLETİŞİM -->
+    <section id="contact">
+      <h2>7/24 Bize Ulaşın</h2>
+      <div class="contact-methods">
+        <div class="contact-card">
+          <h3>Telefon</h3>
+          <div class="phone">
+            <a href="tel:05321541043">0532 154 10 43</a>
+            <a href="tel:05322051192">0532 205 11 92</a>
+          </div>
+          <p style="color:#aaa; font-size:1rem; text-align:center;">7/24 aktif destek hattı</p>
+        </div>
+        <div class="contact-card">
+          <h3>E-posta</h3>
+          <p style="color:#ccc; margin-bottom:15px; text-align:center;">Bize e-posta göndermek için:</p>
+          <a href="mailto:furkanotokurtarma61@gmail.com" class="email-btn">
+            <i class="fas fa-envelope"></i> furkanotokurtarma61@gmail.com
+          </a>
+        </div>
+        <div class="contact-card">
+          <h3 style="color:var(--accent); margin-bottom:20px;">Türkiye Geneli Hizmet</h3>
+          <p style="color:#ccc; font-size:1.1rem; text-align:center;">Tüm illerimize 7/24 ulaşım sağlıyoruz</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- FOOTER -->
+  <footer>
+    <p>FURKAN OTO KURTARMA - Türkiye'nin En Güvenilir Çekici Hizmeti</p>
+    <p>Bu Site Profosyonel ekiple tasarlanmıştır.</p>
+  </footer>
 
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("factText").textContent = getRandomFact();
-  });
-</script>
+  <!-- DİNAMİK BİLGİ KUTUSU -->
+  <script>
+    const facts = [
+      "Türkiye'de her yıl yaklaşık 500.000 araç arızalanıyor ve çekiciye ihtiyaç duyuyor.",
+      "Otomobil sayısı artarken, yolda kalan araçların %70’i 10 dakika içinde yardım alabiliyor.",
+      "Çekici servislerinin hızı, kazalar sonrası can kaybını azaltmada önemli rol oynuyor.",
+      "Güvenli sürüş alışkanlıkları, yolda kalmayı %40 oranında azaltabilir.",
+      "Furkan Oto Kurtarma, Bursa merkezli olarak Türkiye'nin tüm illerine hizmet veriyor.",
+      "Yolda kalan araçların %30'u lastik arızaları nedeniyle çekici çağırıyor.",
+      "Çekici hizmetleri, kış aylarında %60 artış gösteriyor.",
+      "Araç çekilmesi durumlarında %95 müşteri memnuniyeti sağlanıyor.",
+      "Sürüş esnasında yaşanan elektrik arızaları en çok tercih edilen çekici sebeplerinden biridir.",
+      "Furkan Oto Kurtarma, 7/24 kesintisiz hizmet veren tek isimlerden biridir."
+    ];
+
+    function getRandomFact() {
+      return facts[Math.floor(Math.random() * facts.length)];
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("factText").textContent = getRandomFact();
+    });
+  </script>
+</body>
 </html>
+
